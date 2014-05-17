@@ -12,7 +12,7 @@ $module_settings = ft_get_module_settings("", "submission_accounts");
 $logout_location = $module_settings["logout_location"];
 if ($logout_location == "custom_url" || empty($logout_location))
 {
-  $custom_logout_url = $module_settings["logout_url"];
+  $logout_url = $module_settings["logout_url"];
 }
 else
 {

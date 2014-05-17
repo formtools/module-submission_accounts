@@ -453,6 +453,7 @@ function sa_get_submission_account_data($form_id, $page = 1, $username_col)
    $count_result = mysql_query("
     SELECT count(*) as c
     FROM 	 {$g_table_prefix}module_submission_accounts_data
+    WHERE  form_id = $form_id
       ");
    $count_hash = mysql_fetch_assoc($count_result);
 

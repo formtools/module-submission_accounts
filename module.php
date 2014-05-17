@@ -4,11 +4,11 @@
  * Module file: Submission Accounts
  */
 
-$MODULE["author"]          = "Encore Web Studios";
-$MODULE["author_email"]    = "formtools@encorewebstudios.com";
+$MODULE["author"]          = "Ben Keen";
+$MODULE["author_email"]    = "ben.keen@gmail.com";
 $MODULE["author_link"]     = "http://modules.formtools.org";
-$MODULE["version"]         = "1.2.8";
-$MODULE["date"]            = "2011-11-08";
+$MODULE["version"]         = "1.2.9";
+$MODULE["date"]            = "2012-04-11";
 $MODULE["origin_language"] = "en_us";
 
 // define the module navigation - the keys are keys defined in the language file. This lets

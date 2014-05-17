@@ -21,7 +21,7 @@
  * for more information.
  *
  * @param array $info
- * @return string an error message if unsuccessful, or
+ * @return string an error message if unsuccessful, or redirects to the appropriate login page.
  */
 function sa_login($info)
 {
@@ -178,10 +178,14 @@ function sa_login($info)
   $_SESSION["ft"]["account"]["submission_id"] = $submission_info["submission_id"];
   $_SESSION["ft"]["settings"] = ft_get_settings();
 
-  sa_cache_account_menu($form_id);
+  $menu_template_info = sa_cache_account_menu($form_id);
+
+  $login_url = "$g_root_url/modules/submission_accounts/users/";
+  if (count($menu_template_info) > 0)
+    $login_url = $menu_template_info[0]["url"];
 
   session_write_close();
-  header("Location: $g_root_url/modules/submission_accounts/users/");
+  header("Location: $login_url");
   exit;
 }
 
@@ -215,6 +219,8 @@ function sa_cache_account_menu($form_id)
   }
 
   $_SESSION["ft"]["menu"]["menu_items"] = $menu_template_info;
+
+  return $menu_template_info;
 }
 
 
