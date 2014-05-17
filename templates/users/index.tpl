@@ -16,7 +16,7 @@
 
     {ft_include file="messages.tpl"}
 
-    <form action="{$same_page}" method="post" name="edit_submission_form" enctype="multipart/form-data">
+    <form action="{$same_page}" method="post" name="edit_submission_form" id="edit_submission_form" enctype="multipart/form-data">
       {* hidden fields needed for JS - don't delete! *}
       <input type="hidden" name="form_id" id="form_id" value="{$form_id}" />
       <input type="hidden" name="submission_id" id="submission_id" value="{$submission_id}" />
@@ -37,7 +37,7 @@
         {foreach from=$fields item=curr_field}
           {assign var=field_id value=$field.field_id}
           <tr>
-            <td width="150" class="pad_left_small" valign="top">{$curr_field.field_title}</td>
+            <td width="150" class="pad_left_small" valign="top">{$curr_field.field_title} <span class="req">{if $curr_field.is_required}*{/if}</span></td>
             <td valign="top">
               {edit_custom_field form_id=$form_id submission_id=$submission_id field_info=$curr_field field_types=$field_types
                 settings=$settings}

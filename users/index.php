@@ -26,21 +26,12 @@ $_SESSION["ft"]["last_submission_id"] = $submission_id;
 $tab_number = ft_load_field("tab", "view_{$view_id}_current_tab", 1);
 $grouped_views = ft_get_grouped_views($form_id, array("omit_hidden_views" => true, "omit_empty_groups" => true));
 
-// check the current client is permitted to view this information!
-/*ft_check_client_may_view($account_id, $form_id, $view_id);
-if (!ft_check_view_contains_submission($form_id, $view_id, $submission_id))
-{
-  header("location: index.php");
-  exit;
-}*/
-
 // get a list of all editable fields in the View. This is used both for security purposes
 // for the update function and to determine whether the page contains any editable fields
 $editable_field_ids = _ft_get_editable_view_fields($view_id);
 
 // get the tabs for this View
 $view_tabs = ft_get_view_tabs($view_id, true);
-
 
 // handle POST requests
 if (isset($_POST) && !empty($_POST))
@@ -102,6 +93,8 @@ foreach ($shared_resources_array as $resource)
   $shared_resources .= ft_eval_smarty_string($resource, array("g_root_url" => $g_root_url)) . "\n";
 }
 
+$validation_js = ft_generate_submission_js_validation($grouped_fields);
+
 // ------------------------------------------------------------------------------------------------
 
 // compile the header information
@@ -126,12 +119,15 @@ $page_vars["edit_submission_page_label"] = $edit_submission_page_label;
 $page_vars["page_field_ids"] = $page_field_ids;
 $page_vars["page_field_ids_str"] = implode(",", $page_field_ids);
 $page_vars["js_messages"] = array("confirm_delete_submission", "notify_no_email_template_selected", "confirm_delete_submission_file",
-  "phrase_please_confirm", "word_no", "word_yes");
+  "phrase_please_confirm", "word_no", "word_yes", "phrase_validation_error", "word_close");
 $page_vars["head_string"] =<<< EOF
   <script type="text/javascript" src="$g_root_url/global/scripts/manage_submissions.js"></script>
   <script type="text/javascript" src="$g_root_url/global/scripts/field_types.php"></script>
   <link rel="stylesheet" href="$g_root_url/global/css/field_types.php" type="text/css" />
 $shared_resources
 EOF;
+$page_vars["head_js"] =<<< END
+$validation_js
+END;
 
 ft_display_module_page("templates/users/index.tpl", $page_vars);
