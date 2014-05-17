@@ -190,6 +190,7 @@ $FILES = array(
   "global/code/",
   "global/code/actions.php",
   "global/code/admin.php",
+  "global/code/module.php",
   "global/code/users.php",
   "global/css/",
   "global/css/styles.css",
