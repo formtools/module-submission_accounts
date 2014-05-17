@@ -7,8 +7,8 @@
 $MODULE["author"]          = "Encore Web Studios";
 $MODULE["author_email"]    = "formtools@encorewebstudios.com";
 $MODULE["author_link"]     = "http://modules.formtools.org";
-$MODULE["version"]         = "1.0.0-beta-20090217";
-$MODULE["date"]            = "2009-02-17";
+$MODULE["version"]         = "1.0.0-beta-20091003";
+$MODULE["date"]            = "2009-10-03";
 $MODULE["origin_language"] = "en_us";
 $MODULE["supports_ft_versions"] = "2.0.0";
 

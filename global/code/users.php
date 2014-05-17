@@ -293,8 +293,6 @@ function sa_send_password($form_id, $info)
   $smarty_email_subject = file_get_contents("$g_root_dir/modules/submission_accounts/templates/emails/forget_password_subject.tpl");
   $email_subject = trim(ft_eval_smarty_string($smarty_email_subject, $placeholders));
 
-  // TODO
-
   // send email [note: the double quotes around the email recipient and content are intentional:
   // some systems fail without it]
   if (!@mail("$email", $email_subject, $email_content))
@@ -304,5 +302,5 @@ function sa_send_password($form_id, $info)
     return array($success, $message);
   }
 
-  return array($success, $message);
+  return array(true, $LANG["notify_email_sent"]);
 }

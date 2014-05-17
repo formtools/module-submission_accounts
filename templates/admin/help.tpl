@@ -8,7 +8,7 @@
   </table>
 
   <p>
-    For help on how to use this module, please see the <a href="http://modules.formtools.org/submission_accounts/">module help documentation</a>.
+    For help on how to use this module, please see the <a href="http://modules.formtools.org/submission_accounts/documentation.php">module help documentation</a>.
   </p>
 
 {include file='modules_footer.tpl'}
