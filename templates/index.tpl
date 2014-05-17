@@ -15,11 +15,11 @@
 
   {if $submission_accounts|@count == 0}
 
-		<div class="notify yellow_bg" class="margin_bottom_large">
-			<div style="padding:8px">
-				{$L.notify_no_submission_accounts}
-		  </div>
-	  </div>
+    <div class="notify yellow_bg" class="margin_bottom_large">
+      <div style="padding:8px">
+        {$L.notify_no_submission_accounts}
+      </div>
+    </div>
 
   {else}
 
@@ -27,7 +27,7 @@
     <tr>
       <th width="30">{$LANG.word_id|upper}</th>
       <th>{$LANG.word_form}</th>
-      <th width="80">{$L.word_users|upper}</th>
+      <th width="120">{$LANG.word_status}</th>
       <th width="80">{$LANG.word_edit|upper}</th>
       <th width="80" class="del">{$LANG.word_delete|upper}</th>
     </tr>
@@ -35,9 +35,15 @@
     <tr>
       <td class="medium_grey" align="center">{$info.form_id}</td>
       <td class="pad_left_small"><a href="{$info.form_url}" target="_blank">{$info.form_name}</a></td>
-      <td align="center"><a href="admin/edit.php?form_id={$info.form_id}&page=users">{$L.word_users|upper}</a></td>
+      <td align="center">
+        {if $info.submission_account_is_active == "yes"}
+          <span class="light_green">{$LANG.word_active}</span>
+        {else}
+          <span class="red">{$LANG.word_disabled}</span>
+        {/if}
+      </td>
       <td align="center"><a href="admin/edit.php?form_id={$info.form_id}">{$LANG.word_edit|upper}</a></td>
-      <td class="del"><a href="">{$LANG.word_delete|upper}</a></td>
+      <td class="del"><a href="#" onclick="return page_ns.delete_form({$info.form_id})">{$LANG.word_delete|upper}</a></td>
     </tr>
     {/foreach}
     </table>
@@ -45,9 +51,9 @@
   {/if}
 
   <form action="admin/add.php" method="post">
-	  <div class="margin_top_large">
-	    <input type="submit" name="add_form" value="{$L.phrase_configure_new_form}" />
-	  </div>
+    <div class="margin_top_large">
+      <input type="submit" name="add_form" value="{$L.phrase_configure_new_form}" />
+    </div>
   </form>
 
 

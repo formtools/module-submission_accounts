@@ -8,10 +8,6 @@ ft_check_permission("user");
 
 require_once("../library.php");
 
-// if required, include the Image Manager module
-if (ft_check_module_enabled("image_manager"))
-  ft_include_module("image_manager");
-
 // blur the GET and POST variables into a single variable for easy reference
 $request = array_merge($_GET, $_POST);
 $form_id       = $_SESSION["ft"]["account"]["form_id"];
@@ -38,9 +34,9 @@ $view_tabs = ft_get_view_tabs($view_id, true);
 // handle POST requests
 if (isset($_POST) && !empty($_POST))
 {
-	// add the view ID to the request hash, for use by the ft_update_submission function
-	$request["view_id"] = $view_id;
-	$request["editable_field_ids"] = $editable_field_ids;
+  // add the view ID to the request hash, for use by the ft_update_submission function
+  $request["view_id"] = $view_id;
+  $request["editable_field_ids"] = $editable_field_ids;
   list($g_success, $g_message) = ft_update_submission($form_id, $submission_id, $request);
 
   // if required, remove a file or image
@@ -61,6 +57,15 @@ if (isset($_POST) && !empty($_POST))
     if ($g_success)
       $g_message = $LANG["notify_email_sent_to_user"];
   }
+
+  // if the View just changed, re-set the
+  $new_view_id = sa_get_submission_view($form_id, $submission_id);
+  if ($view_id != $new_view_id)
+  {
+    $_SESSION["ft"]["account"]["view_id"] = $new_view_id;
+    header("location: index.php");
+    exit;
+  }
 }
 
 
@@ -76,21 +81,21 @@ $image_field_info         = array();
 
 for ($i=0; $i<count($submission_info); $i++)
 {
-	// if this view has tabs, ignore those fields that aren't on the current tab.
-	if (count($view_tabs) > 0 && (!isset($submission_info[$i]["tab_number"]) || $submission_info[$i]["tab_number"] != $tab_number))
-	  continue;
+  // if this view has tabs, ignore those fields that aren't on the current tab.
+  if (count($view_tabs) > 0 && (!isset($submission_info[$i]["tab_number"]) || $submission_info[$i]["tab_number"] != $tab_number))
+    continue;
 
-	$curr_field_id = $submission_info[$i]["field_id"];
+  $curr_field_id = $submission_info[$i]["field_id"];
 
-	if ($submission_info[$i]["field_type"] == "wysiwyg")
-	  $wysiwyg_field_ids[] = "field_{$curr_field_id}_wysiwyg";
+  if ($submission_info[$i]["field_type"] == "wysiwyg")
+    $wysiwyg_field_ids[] = "field_{$curr_field_id}_wysiwyg";
 
-	// if this is an image field, keep track of its extended image settings. These are passed to the image rendering Smarty
-	// plugin function to let it know how to display it
-	if ($submission_info[$i]["field_type"] == "image")
-	  $image_field_info[$curr_field_id] = ft_get_extended_field_settings($curr_field_id, "image_manager");
+  // if this is an image field, keep track of its extended image settings. These are passed to the image rendering Smarty
+  // plugin function to let it know how to display it
+  if ($submission_info[$i]["field_type"] == "image")
+    $image_field_info[$curr_field_id] = ft_get_extended_field_settings($curr_field_id, "image_manager");
 
-	$submission_tab_field_ids[] = $curr_field_id;
+  $submission_tab_field_ids[] = $curr_field_id;
   $submission_tab_fields[]    = $submission_info[$i];
 }
 
@@ -140,15 +145,15 @@ $page_vars["head_string"] = "<script type=\"text/javascript\" src=\"$g_root_url/
 // if the image manager is enabled, there's a good chance the user wants to use the Lightbox. Include it!
 if ($image_manager_enabled)
 {
-	$page_vars["head_string"] .= "
-	<script type=\"text/javascript\" src=\"{$g_root_url}/global/scripts/lightbox.js\"></script>
+  $page_vars["head_string"] .= "
+  <script type=\"text/javascript\" src=\"{$g_root_url}/global/scripts/lightbox.js\"></script>
   <link rel=\"stylesheet\" href=\"$g_root_url/global/css/lightbox.css\" type=\"text/css\" media=\"screen\" />";
 }
 
 $tiny_resize = ($_SESSION["ft"]["settings"]["tinymce_resize"] == "yes") ? "true" : "false";
 $content_css = "$g_root_url/global/css/tinymce.css";
 
-	$page_vars["head_js"] = "
+  $page_vars["head_js"] = "
 
 // load up any WYWISYG editors in the page
 g_content_css = \"$content_css\";
@@ -167,10 +172,10 @@ var page_ns = {};
  */
 page_ns.delete_submission_file = function(file_type, field_id)
 {
-	f = document.edit_submission_form;
-	f.field_id.value = field_id;
-	f.delete_file_type.value = file_type;
-	f.submit();
+  f = document.edit_submission_form;
+  f.field_id.value = field_id;
+  f.delete_file_type.value = file_type;
+  f.submit();
 }
 ";
 

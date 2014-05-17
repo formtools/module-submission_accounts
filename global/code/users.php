@@ -1,14 +1,15 @@
 <?php
 
 /**
- * This file defines all functions for the users
+ * This file defines all functions for the users, logging into the module.
  *
- * @copyright Encore Web Studios 2008
+ * @copyright Encore Web Studios 2009
  * @author Encore Web Studios <formtools@encorewebstudios.com>
  */
 
 
 // -------------------------------------------------------------------------------------------------
+
 
 /**
  * This function attempts to log a user in. If it succeeds, they're simply redirected to their user
@@ -24,36 +25,36 @@
  */
 function sa_login($info)
 {
-	global $g_table_prefix, $L, $g_root_url;
+  global $g_table_prefix, $L, $g_root_url;
 
-	$info = ft_sanitize($info);
+  $info = ft_sanitize($info);
 
-	$redirect_url = (isset($info["invalid_login_redirect_url"])) ? $info["invalid_login_redirect_url"] : "";
+  $redirect_url = (isset($info["invalid_login_redirect_url"])) ? $info["invalid_login_redirect_url"] : "";
 
-	$error_codes = array();
-	if (!isset($info["form_id"]))                              $error_codes[] = "no_form_id";
-	if (!isset($info["username"]) || empty($info["username"])) $error_codes[] = "no_username";
-	if (!isset($info["password"]) || empty($info["password"])) $error_codes[] = "no_password";
+  $error_codes = array();
+  if (!isset($info["form_id"]))                              $error_codes[] = "no_form_id";
+  if (!isset($info["username"]) || empty($info["username"])) $error_codes[] = "no_username";
+  if (!isset($info["password"]) || empty($info["password"])) $error_codes[] = "no_password";
 
   // if there are any problems at this juncture, just return / display the error
   if (!empty($error_codes))
   {
-	  if (empty($redirect_url))
-	  {
-	  	// if there isn't a form
-	  	if (in_array("no_form_id", $error_codes))
-	  		return $L["validation_no_form_id"];
-	  	else if (in_array("no_username", $error_codes))
-	  		return $L["validation_no_username"];
-	  	else if (in_array("no_password", $error_codes))
+    if (empty($redirect_url))
+    {
+      // if there isn't a form
+      if (in_array("no_form_id", $error_codes))
+        return $L["validation_no_form_id"];
+      else if (in_array("no_username", $error_codes))
+        return $L["validation_no_username"];
+      else if (in_array("no_password", $error_codes))
         return $L["validation_no_password"];
-	  }
-	  else
-	  {
-	  	if (!empty($error_codes))
-	  	{
-	  		$params = array();
-	  		$params[] = "error_codes=" . join(",", $error_codes);
+    }
+    else
+    {
+      if (!empty($error_codes))
+      {
+        $params = array();
+        $params[] = "error_codes=" . join(",", $error_codes);
         if (isset($info["form_id"]))
           $params[] = "form_id={$info["form_id"]}";
         if (isset($info["username"]))
@@ -62,8 +63,8 @@ function sa_login($info)
         $query_str = join("&", $params);
         header("location: $redirect_url?$query_str");
         exit;
-	  	}
-	  }
+      }
+    }
   }
 
   $form_id = $info["form_id"];
@@ -73,24 +74,24 @@ function sa_login($info)
 
   if (!isset($submission_account["form_id"]))
   {
-	  if (empty($redirect_url))
+    if (empty($redirect_url))
       return $L["validation_login_invalid_form_id"];
-	  else
-	  {
+    else
+    {
       header("location: $redirect_url?error_code=invalid_form_id");
       exit;
-	  }
+    }
   }
 
   if ($submission_account["is_active"] == "no")
   {
-	  if (empty($redirect_url))
+    if (empty($redirect_url))
       return $L["notify_submission_account_inactive"];
-	  else
-	  {
+    else
+    {
       header("location: $redirect_url?error_code=form_inactive");
       exit;
-	  }
+    }
   }
 
 
@@ -115,23 +116,23 @@ function sa_login($info)
   $submission_info = array();
   while ($submission = mysql_fetch_assoc($query))
   {
-  	if ($submission[$password_col] == $info["password"])
-  	{
-  		$account_found = true;
-  		$submission_info = $submission;
-  		break;
-  	}
+    if ($submission[$password_col] == $info["password"])
+    {
+      $account_found = true;
+      $submission_info = $submission;
+      break;
+    }
   }
 
   if (!$account_found)
   {
-	  if (empty($redirect_url))
+    if (empty($redirect_url))
       return $L["validation_login_incorrect"];
-	  else
-	  {
+    else
+    {
       header("location: $redirect_url?error_code=login_incorrect");
       exit;
-	  }
+    }
   }
 
   $submission_id = $submission_info["submission_id"];
@@ -156,13 +157,16 @@ function sa_login($info)
   }
   else
   {
-  	mysql_query("
-  	  UPDATE {$g_table_prefix}module_submission_accounts_data
+    mysql_query("
+      UPDATE {$g_table_prefix}module_submission_accounts_data
       SET    last_logged_in = '$now'
       WHERE  form_id = $form_id AND
              submission_id = $submission_id
         ");
   }
+
+  // now figure out what View the user's supposed to see
+  $view_id = sa_get_submission_view($form_id, $submission_id);
 
 
   $_SESSION["ft"] = array();
@@ -170,7 +174,7 @@ function sa_login($info)
   $_SESSION["ft"]["account"]["is_logged_in"] = true;
   $_SESSION["ft"]["account"]["theme"] = $submission_account["theme"];
   $_SESSION["ft"]["account"]["form_id"] = $form_id;
-  $_SESSION["ft"]["account"]["view_id"] = $submission_account["view_id"];
+  $_SESSION["ft"]["account"]["view_id"] = $view_id;
   $_SESSION["ft"]["account"]["submission_id"] = $submission_info["submission_id"];
   $_SESSION["ft"]["settings"] = ft_get_settings();
 
@@ -191,26 +195,26 @@ function sa_login($info)
  */
 function sa_cache_account_menu($form_id)
 {
-	global $g_root_url;
+  global $g_root_url;
 
-	$menu_info = sa_get_form_menu($form_id);
+  $menu_info = sa_get_form_menu($form_id);
 
-	$menu_template_info = array();
-	for ($i=0; $i<count($menu_info); $i++)
-	{
-		$curr_item = $menu_info[$i];
+  $menu_template_info = array();
+  for ($i=0; $i<count($menu_info); $i++)
+  {
+    $curr_item = $menu_info[$i];
 
-		$url = (preg_match("/^http/", $curr_item["url"])) ? $curr_item["url"] : $g_root_url . $curr_item["url"];
+    $url = (preg_match("/^http/", $curr_item["url"])) ? $curr_item["url"] : $g_root_url . $curr_item["url"];
 
-		$menu_template_info[] = array(
-		  "url"             => $url,
-		  "display_text"    => $curr_item["display_text"],
-		  "page_identifier" => $curr_item["page_identifier"],
-		  "is_submenu"      => $curr_item["is_submenu"]
-		);
-	}
+    $menu_template_info[] = array(
+      "url"             => $url,
+      "display_text"    => $curr_item["display_text"],
+      "page_identifier" => $curr_item["page_identifier"],
+      "is_submenu"      => $curr_item["is_submenu"]
+    );
+  }
 
-	$_SESSION["ft"]["menu"]["menu_items"] = $menu_template_info;
+  $_SESSION["ft"]["menu"]["menu_items"] = $menu_template_info;
 }
 
 
@@ -303,4 +307,46 @@ function sa_send_password($form_id, $info)
   }
 
   return array(true, $LANG["notify_email_sent"]);
+}
+
+
+/**
+ * With the introduction of the View Override function in 1.1.0, the form View that the user
+ * sees when they log in is dependant on the contents of their submission. This function determines
+ * what View should be seen. It's called when they first log in and
+ */
+function sa_get_submission_view($form_id, $submission_id)
+{
+  $submission_account = sa_get_submission_account($form_id);
+
+  // if there aren't any View overrides defined for this Submission Account, just return the default View ID
+  $view_id = $submission_account["view_id"];
+  if (empty($submission_account["view_overrides"]))
+    return $view_id;
+
+  $submission_info = ft_get_submission($form_id, $submission_id);
+
+  // loop through the (ordered) view overrides and
+  foreach ($submission_account["view_overrides"] as $view_override_info)
+  {
+    $has_matched_view_override = false;
+    foreach ($submission_info as $field_info)
+    {
+      if ($field_info["field_id"] == $view_override_info["field_id"])
+      {
+        $match_values = explode("|", $view_override_info["match_values"]);
+        if (in_array($field_info["content"], $match_values))
+        {
+          $has_matched_view_override = true;
+          $view_id = $view_override_info["view_id"];
+        }
+        break;
+      }
+    }
+
+    if ($has_matched_view_override)
+      break;
+  }
+
+  return $view_id;
 }

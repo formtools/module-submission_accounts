@@ -24,11 +24,11 @@ $action  = $request["action"];
 $return_val_str = "";
 if (isset($request["return_vals"]))
 {
-	$vals = array();
+  $vals = array();
   foreach ($request["return_vals"] as $pair)
   {
-  	list($key, $value) = split(":", $pair);
-  	$vals[] = "$key: \"$value\"";
+    list($key, $value) = split(":", $pair);
+    $vals[] = "$key: \"$value\"";
   }
   $return_val_str = ", " . join(", ", $vals);
 }
@@ -36,17 +36,17 @@ if (isset($request["return_vals"]))
 
 switch ($action)
 {
-	case "get_form_fields":
-		$form_id = $request["form_id"];
-		$form_fields = ft_get_form_fields($form_id);
+  case "get_form_fields":
+    $form_id = $request["form_id"];
+    $form_fields = ft_get_form_fields($form_id);
 
-		$js_info = array();
-		foreach ($form_fields as $field_info)
-		  $js_info[] = "[{$field_info["field_id"]}, \"" . htmlspecialchars($field_info["field_title"], ENT_QUOTES) . "\"]";
+    $js_info = array();
+    foreach ($form_fields as $field_info)
+      $js_info[] = "[{$field_info["field_id"]}, \"" . htmlspecialchars($field_info["field_title"], ENT_QUOTES) . "\"]";
 
-		$js_array = "[" . join(", ", $js_info) . "]";
+    $js_array = "[" . join(", ", $js_info) . "]";
 
-		echo "{ success: true, form_id: $form_id, fields: " . $js_array . " }";
-		break;
+    echo "{ success: true, form_id: $form_id, fields: " . $js_array . " }";
+    break;
 }
 

@@ -29,13 +29,13 @@ if (!empty($form_id))
     $g_theme = $submission_account["theme"];
   else if (isset($submission_account["submission_account_is_active"]) && $submission_account["submission_account_is_active"] == "no")
   {
-	  $main_error = true;
-	  $error = $L["notify_submission_account_inactive"];
+    $main_error = true;
+    $error = $L["notify_submission_account_inactive"];
   }
   else
   {
-	  $main_error = true;
-	  $error = $L["validation_login_invalid_form_id"];
+    $main_error = true;
+    $error = $L["validation_login_invalid_form_id"];
   }
 }
 else
@@ -47,7 +47,7 @@ else
 
 if (isset($_POST["login"]))
 {
-	$_POST["form_id"] = $form_id;
+  $_POST["form_id"] = $form_id;
   $error = sa_login($_POST);
 }
 

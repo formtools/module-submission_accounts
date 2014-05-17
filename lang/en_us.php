@@ -31,6 +31,10 @@ $L["phrase_password_field"] = "Password Field";
 $L["phrase_custom_login"] = "Custom Login";
 $L["phrase_redirect_failed_logins_c"] = "Redirect failed logins to custom URL:";
 $L["phrase_clear_results"] = "Clear Results";
+$L["phrase_view_override_settings_rightarrow"] = "View Override Settings &raquo;";
+$L["phrase_if_field"] = "If field";
+$L["phrase_has_values"] = "Has value(s)";
+$L["phrase_then_use_view"] = "then, use View";
 
 $L["validation_no_username_field"] = "Please select the field which will act as the username.";
 $L["validation_no_password_field"] = "Please select the field which will act as the password.";
@@ -44,17 +48,21 @@ $L["validation_email_not_found"] = "Sorry, we can't find a user account with tha
 $L["validation_no_email"] = "Please enter your email address.";
 
 $L["notify_error_configuring_form"] = "There was a problem configuring this form.";
-$L["notify_form_configured"] = "The submission accounts have been configured for this form.";
+$L["notify_form_configured"] = "This form has been configured for submission accounts.";
 $L["notify_submission_account_updated"] = "The submission account has been updated for this form.";
 $L["notify_menu_updated"] = "The menu has been updated.";
 $L["notify_settings_updated"] = "The settings have been updated.";
-$L["notify_login_no_form_id"] = "Sorry, there has been no form ID passed to this page. In order to display the login form, a <b>form_id</b> parameter set to the form ID needs to be passed to this page via POST or GET. Please see the user documentation.";
+$L["notify_login_no_form_id"] = "Sorry, there has been no form ID passed to this page. In order to display the login form, a <b>form_id</b> value must to be passed to this page via POST or GET. Please see the <a href=\"http://modules.formtools.org/submission_accounts/?page=logging_in\">user documentation</a>.";
 $L["notify_submission_account_inactive"] = "Sorry, user accounts are currently inactive for this form.";
 $L["notify_submission_account_data_deleted"] = "The user login data has been cleared.";
 $L["notify_problem_installing"] = "There following error occurred when trying to create the database tables for this module: <b>{\$error}</b>";
+
+$L["confirm_delete_form"] = "Are you sure you want to delete this Submission Account configuration for this form?";
 
 $L["text_forget_password_link"] = "If you have forgotten your password, <a href=\"forget_password.php\">click here</a>.";
 $L["text_forgot_password"] = "No problem. Just enter your email below and your login information will be sent to you. If you encounter problems, please email the site administrator at {\$site_admin_email}.";
 $L["text_add_submission_account_intro"] = "Use the form below to configure the submission accounts for one of your forms. Please see the <a href=\"http://modules.formtools.org/submission_accounts/?page=configure_new_form\">help pages</a> for more information.";
 $L["text_html_tab"] = "This tabs lets you generate a custom login form to embed within your own webpages, rather than forcing your users to login via the <a href=\"../login.php\">built-in login form</a>.";
 $L["text_include_forget_password"] = "Include \"Forget Password\" link <span class=\"light_grey\">(only available if you have defined the email field)</span>";
+$L["text_view_override_intro"] = "This section lets you override the default View specified above, depending on the submission content. In other words, you can use this section to show different fields for different users, depending on what form values they have.";
+

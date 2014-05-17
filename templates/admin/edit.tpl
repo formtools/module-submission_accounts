@@ -10,20 +10,20 @@
   </tr>
   </table>
 
-	{include file='tabset_open.tpl'}
+  {include file='tabset_open.tpl'}
 
-		{if $page == "main"}
-			{include file='../../modules/submission_accounts/templates/admin/tab_main.tpl'}
-		{elseif $page == "menu"}
-			{include file='../../modules/submission_accounts/templates/admin/tab_menu.tpl'}
-		{elseif $page == "users"}
-			{include file='../../modules/submission_accounts/templates/admin/tab_users.tpl'}
-		{elseif $page == "html"}
-			{include file='../../modules/submission_accounts/templates/admin/tab_html.tpl'}
-		{else}
-			{include file='../../modules/submission_accounts/templates/admin/tab_main.tpl'}
-		{/if}
+    {if $page == "main"}
+      {include file='../../modules/submission_accounts/templates/admin/tab_main.tpl'}
+    {elseif $page == "menu"}
+      {include file='../../modules/submission_accounts/templates/admin/tab_menu.tpl'}
+    {elseif $page == "users"}
+      {include file='../../modules/submission_accounts/templates/admin/tab_users.tpl'}
+    {elseif $page == "html"}
+      {include file='../../modules/submission_accounts/templates/admin/tab_html.tpl'}
+    {else}
+      {include file='../../modules/submission_accounts/templates/admin/tab_main.tpl'}
+    {/if}
 
-	{include file='tabset_close.tpl'}
+  {include file='tabset_close.tpl'}
 
 {include file='modules_footer.tpl'}

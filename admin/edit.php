@@ -27,23 +27,22 @@ $tabs = array(
         )
      );
 
-
 // load the appropriate code pages
 switch ($page)
 {
-	case "main":
-		require("tab_main.php");
-		break;
-	case "menu":
-		require("tab_menu.php");
-		break;
-	case "users":
-		require("tab_users.php");
-		break;
-	case "html":
-		require("tab_html.php");
-	  break;
-	default:
-		require("tab_main.php");
-		break;
+  case "main":
+    require("tab_main.php");
+    break;
+  case "menu":
+    require("tab_menu.php");
+    break;
+  case "users":
+    require("tab_users.php");
+    break;
+  case "html":
+    require("tab_html.php");
+    break;
+  default:
+    require("tab_main.php");
+    break;
 }

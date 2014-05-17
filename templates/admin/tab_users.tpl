@@ -6,23 +6,23 @@
 
   {if $num_results == 0}
 
-		<div class="notify yellow_bg" class="margin_bottom_large">
-			<div style="padding:8px">
-				No-one has logged in.
-		  </div>
-	  </div>
+    <div class="notify yellow_bg" class="margin_bottom_large">
+      <div style="padding:8px">
+        No-one has logged in.
+      </div>
+    </div>
 
-	{else}
+  {else}
 
-		{$pagination}
+    {$pagination}
 
-	  <table class="list_table" style="width:550px" cellpadding="1" cellspacing="1">
-	  <tr style="height: 20px;">
-	    <th width="50" class="nowrap pad_left pad_right">{$LANG.phrase_submission_id|upper}</th>
-	    <th>{$module_settings.username_field_label}</th>
-	    <th>{$LANG.phrase_last_logged_in}</th>
-	    <th width="60">{$LANG.word_view|upper}</th>
-	  </tr>
+    <table class="list_table" style="width:550px" cellpadding="1" cellspacing="1">
+    <tr style="height: 20px;">
+      <th width="50" class="nowrap pad_left pad_right">{$LANG.phrase_submission_id|upper}</th>
+      <th>{$module_settings.username_field_label}</th>
+      <th>{$LANG.phrase_last_logged_in}</th>
+      <th width="60">{$LANG.word_view|upper}</th>
+    </tr>
     {foreach from=$results item=submission name=row}
     <tr>
       <td align="center" class="medium_grey">{$submission.submission_id}</td>
