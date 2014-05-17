@@ -25,7 +25,7 @@
       <td class="red" align="center">*</td>
       <td class="pad_left_small">{$LANG.word_view}</td>
       <td>
-        {views_dropdown name_id="view_id" form_id=$form_id default=$submission_account.view_id}
+        {views_dropdown name_id="view_id" form_id=$form_id selected=$submission_account.view_id}
       </td>
     </tr>
     <tr>
