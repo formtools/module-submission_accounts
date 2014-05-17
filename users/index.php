@@ -133,6 +133,7 @@ $page_vars["view_id"] = $view_id;
 $page_vars["submission_tab_fields"] = $submission_tab_fields;
 $page_vars["submission_tab_field_id_str"] = join(",", $submission_tab_field_ids);
 $page_vars["tab_number"] = $tab_number;
+$page_vars["js_messages"] = array("confirm_delete_submission_file");
 $page_vars["head_title"] = "{$LANG['phrase_edit_submission']} - $submission_id";
 $page_vars["head_string"] = "<script type=\"text/javascript\" src=\"$g_root_url/global/tiny_mce/tiny_mce.js\"></script>
   <script type=\"text/javascript\" src=\"$g_root_url/global/scripts/wysiwyg_settings.js\"></script>
