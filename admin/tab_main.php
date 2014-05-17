@@ -37,8 +37,18 @@ $js
 var rules = [];
 rules.push("required,view_id,{$L["validation_no_view_id"]}");
 rules.push("required,theme,{$LANG["validation_no_theme"]}");
+rules.push("function,validate_swatch");
 rules.push("required,username_field_id,{$L["validation_no_username_field"]}");
 rules.push("required,password_field_id,{$L["validation_no_password_field"]}");
+
+function validate_swatch() {
+  var theme     = $("#theme").val();
+  var swatch_id = "#" + theme + "_theme_swatches";
+  if ($(swatch_id).length > 0 && $(swatch_id).val() == "") {
+    return [[$(swatch_id)[0], "{$LANG["validation_no_theme_swatch"]}"]];
+  }
+  return true;
+}
 
 if (typeof sa_ns == undefined) {
   sa_ns = {};

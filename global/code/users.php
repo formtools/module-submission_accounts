@@ -168,11 +168,11 @@ function sa_login($info)
   // now figure out what View the user's supposed to see
   $view_id = sa_get_submission_view($form_id, $submission_id);
 
-
   $_SESSION["ft"] = array();
   $_SESSION["ft"]["account"] = array();
   $_SESSION["ft"]["account"]["is_logged_in"] = true;
   $_SESSION["ft"]["account"]["theme"] = $submission_account["theme"];
+  $_SESSION["ft"]["account"]["swatch"] = $submission_account["swatch"];
   $_SESSION["ft"]["account"]["form_id"] = $form_id;
   $_SESSION["ft"]["account"]["view_id"] = $view_id;
   $_SESSION["ft"]["account"]["submission_id"] = $submission_info["submission_id"];

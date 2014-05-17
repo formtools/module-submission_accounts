@@ -31,7 +31,7 @@
     <tr>
       <td class="red" align="center">*</td>
       <td class="pad_left_small">{$LANG.word_theme}</td>
-      <td>{themes_dropdown name_id="theme" default=$submission_account.theme}</td>
+      <td>{themes_dropdown name_id="theme" default=$submission_account.theme default_swatch=$submission_account.swatch}</td>
     </tr>
     <tr>
       <td class="red" align="center"> </td>

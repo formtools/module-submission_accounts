@@ -29,10 +29,14 @@ function sa_add_submission_account($info)
   $username_field_id = $info["username_field_id"];
   $password_field_id = $info["password_field_id"];
 
+  $swatch = "";
+  if (isset($info["{$theme}_theme_swatches"]))
+    $swatch = $info["{$theme}_theme_swatches"];
+
   $result = mysql_query("
-    INSERT INTO {$g_table_prefix}module_submission_accounts (form_id, view_id, theme, is_active,
+    INSERT INTO {$g_table_prefix}module_submission_accounts (form_id, view_id, theme, swatch, is_active,
       email_field_id, username_field_id, password_field_id)
-    VALUES ($form_id, $view_id, '$theme', 'yes', $email_field_id, $username_field_id, $password_field_id)
+    VALUES ($form_id, $view_id, '$theme', '$swatch', 'yes', $email_field_id, $username_field_id, $password_field_id)
       ");
 
   $num_view_override_rows = $info["num_view_override_rows"];
@@ -250,10 +254,15 @@ function sa_update_submission_account($form_id, $info)
       $username_field_id = (!empty($info["username_field_id"])) ? $info["username_field_id"] : "NULL";
       $password_field_id = (!empty($info["password_field_id"])) ? $info["password_field_id"] : "NULL";
 
+      $swatch = "";
+      if (isset($info["{$theme}_theme_swatches"]))
+        $swatch = $info["{$theme}_theme_swatches"];
+
       $query = mysql_query("
         UPDATE {$g_table_prefix}module_submission_accounts
         SET    view_id = $view_id,
                theme = '$theme',
+               swatch = '$swatch',
                is_active = '$is_active',
                email_field_id = $email_field_id,
                username_field_id = $username_field_id,

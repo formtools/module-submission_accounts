@@ -14,6 +14,7 @@ function submission_accounts__install($module_id)
       form_id mediumint(8) unsigned NOT NULL,
       view_id mediumint(8) unsigned default NULL,
       theme varchar(255) NOT NULL,
+      swatch varchar(255) NULL,
       is_active enum('yes','no') NOT NULL default 'yes',
       inactive_login_message mediumtext,
       email_field_id MEDIUMINT default NULL,
@@ -129,5 +130,11 @@ function submission_accounts__upgrade($old_version, $new_version)
   	@mysql_query("ALTER TABLE {$g_table_prefix}module_submission_accounts_data TYPE=MyISAM");
   	@mysql_query("ALTER TABLE {$g_table_prefix}module_submission_accounts_menus TYPE=MyISAM");
   	@mysql_query("ALTER TABLE {$g_table_prefix}module_submission_accounts_view_override TYPE=MyISAM");
+  }
+
+  if ($old_version_info["release_date"] < 20110930)
+  {
+    @mysql_query("ALTER TABLE {$g_table_prefix}module_submission_accounts ADD swatch VARCHAR(255) NULL AFTER theme");
+    @mysql_query("UPDATE {$g_table_prefix}module_submission_accounts SET swatch = 'green' WHERE theme = 'default'");
   }
 }
