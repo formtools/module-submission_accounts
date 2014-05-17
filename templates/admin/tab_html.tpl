@@ -1,7 +1,7 @@
   {include file="messages.tpl"}
 
   <div class="margin_bottom_large">
-    {$L.text_html_tab}
+    {$text_html_tab}
   </div>
 
   <input type="hidden" id="form_id" value="{$form_id}" />
@@ -32,13 +32,10 @@
     <textarea name="html" id="html" style="width:100%; height:200px"></textarea>
   </div>
 
-  <script type="text/javascript">
+  <script>
   var html_editor = new CodeMirror.fromTextArea("html", {literal}{{/literal}
   parserfile: ["parsexml.js"],
   path: "{$g_root_url}/global/codemirror/js/",
   stylesheet: "{$g_root_url}/global/codemirror/css/xmlcolors.css"
   {literal}});{/literal}
-
-  {literal}setTimeout(function() { lf_ns.generate()}, 100);{/literal}
   </script>
-

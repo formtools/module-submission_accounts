@@ -1,11 +1,16 @@
 {include file='modules_header.tpl'}
 
-  <table cellpadding="0" cellspacing="0" width="100%">
+  <span id="loading_icon" style="display:none"><img src="{$images_url}/ajax_loading.gif" /></span>
+
+  <table cellpadding="0" cellspacing="0">
   <tr>
-    <td width="45"><a href="../index.php"><img src="../images/icon_submission_accounts.gif" border="0" width="34" height="34" /></a></td>
-    <td class="title">{$L.phrase_configure_new_form|upper}</td>
-    <td align="right">
-      <span id="loading_icon" style="display:none"><img src="{$images_url}/ajax_loading.gif" /></span>
+    <td width="45"><a href="../"><img src="../images/icon_submission_accounts.gif" border="0" width="34" height="34" /></a></td>
+    <td class="title">
+      <a href="../../../admin/modules">{$LANG.word_modules}</a>
+      <span class="joiner">&raquo;</span>
+      <a href="../">{$L.module_name}</a>
+      <span class="joiner">&raquo;</span>
+      {$L.phrase_configure_new_form}
     </td>
   </tr>
   </table>
@@ -24,7 +29,8 @@
       <td width="15" class="red" align="center">*</td>
       <td class="pad_left_small" width="140">{$LANG.word_form}</td>
       <td>
-        {forms_dropdown name_id="form_id" omit_forms=$omit_forms include_blank_option=true onchange="sa_ns.select_form(this.value); sa_ns.update_view_override_table_fields()"}
+        {forms_dropdown name_id="form_id" omit_forms=$omit_forms include_blank_option=true
+          onchange="sa_ns.select_form(this.value); sa_ns.update_view_override_table_fields()"}
       </td>
     </tr>
     <tr>
@@ -85,7 +91,7 @@
           <th width="160" class="blue">{$L.phrase_if_field}</th>
           <th>{$L.phrase_has_values}</th>
           <th>{$L.phrase_then_use_view}</th>
-          <th class="del" width="60">{$LANG.word_delete|upper}</th>
+          <th class="del"></th>
         </tr>
         <tr id="row_1">
           <td>
@@ -94,14 +100,14 @@
             </select>
           </td>
           <td>
-            <input type="text" style="width:98%" name="view_override_values_1" id="view_override_values_1" disabled/>
+            <input type="text" style="width:98%" name="view_override_values_1" id="view_override_values_1" disabled />
           </td>
           <td>
             <select name="view_override_view_1" id="view_override_view_1" disabled>
               <option value="">{$LANG.phrase_please_select}</option>
             </select>
           </td>
-          <td class="del" align="center"><a href="#" onclick="return sa_ns.delete_row(1)">{$LANG.word_delete|upper}</a></td>
+          <td class="del"><a href="#" onclick="return sa_ns.delete_row(1)"></a></td>
         </tr>
         </tbody></table>
 

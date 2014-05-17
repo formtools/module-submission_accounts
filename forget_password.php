@@ -62,5 +62,9 @@ $page_vars["error"] = $error;
 $page_vars["submission_account"] = $submission_account;
 $page_vars["main_error"] = $main_error; // an error SO BAD it prevents the login form from appearing
 $page_vars["module_settings"] = $module_settings;
+$page_vars["head_js"] =<<< END
+var rules = [];
+rules.push("required,email,{$L["validation_no_email"]}");
+END;
 
 ft_display_module_page("templates/forget_password.tpl", $page_vars, $g_theme);

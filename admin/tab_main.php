@@ -30,7 +30,7 @@ $page_vars["tabs"] = $tabs;
 $page_vars["page"] = $page;
 $page_vars["form_fields"] = $form_fields;
 $page_vars["js_messages"] = array("phrase_please_select", "phrase_please_select_form", "word_delete");
-$page_vars["head_string"] = "<script type=\"text/javascript\" src=\"../global/scripts/manage_submission_account.js?v=2\"></script>";
+$page_vars["head_string"] = "<script src=\"../global/scripts/manage_submission_account.js?v=3\"></script>";
 $page_vars["head_js"] =<<< EOF
 $js
 
@@ -40,12 +40,12 @@ rules.push("required,theme,{$LANG["validation_no_theme"]}");
 rules.push("required,username_field_id,{$L["validation_no_username_field"]}");
 rules.push("required,password_field_id,{$L["validation_no_password_field"]}");
 
-if (typeof sa_ns == undefined)
+if (typeof sa_ns == undefined) {
   sa_ns = {};
-
+}
 sa_ns.page_type = "edit";
 
-Event.observe(window, "load", function() { sa_ns.init_configure_form_page(); });
+$(sa_ns.init_configure_form_page);
 EOF;
 
 ft_display_module_page("templates/admin/edit.tpl", $page_vars);

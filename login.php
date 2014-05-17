@@ -44,10 +44,11 @@ else
   $error = $L["notify_login_no_form_id"];
 }
 
-
+$username = "";
 if (isset($_POST["login"]))
 {
   $_POST["form_id"] = $form_id;
+  $username = ft_strip_tags($_POST["username"]);
   $error = sa_login($_POST);
 }
 
@@ -55,8 +56,10 @@ if (isset($_POST["login"]))
 
 $page_vars = array();
 $page_vars["error"] = $error;
+$page_vars["username"] = $username;
 $page_vars["submission_account"] = $submission_account;
 $page_vars["main_error"] = $main_error; // an error SO BAD it prevents the login form from appearing
 $page_vars["module_settings"] = $module_settings;
+$page_vars["head_js"]  = "$(function() { document.login.username.focus(); });";
 
 ft_display_module_page("templates/login.tpl", $page_vars, $g_theme);

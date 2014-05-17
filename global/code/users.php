@@ -231,7 +231,6 @@ function sa_send_password($form_id, $info)
   global $g_root_url, $g_root_dir, $g_table_prefix, $LANG, $L;
 
   $info = ft_sanitize($info);
-
   $submission_account = sa_get_submission_account($form_id);
 
   // this should never occur, since the user can only get to the page that calls this function IF
@@ -242,7 +241,6 @@ function sa_send_password($form_id, $info)
 
   $field_info = ft_get_form_field($email_field_id);
   $email_col = $field_info["col_name"];
-
 
   // confirm the email address has been included
   $email = isset($info["email"]) ? $info["email"] : "";

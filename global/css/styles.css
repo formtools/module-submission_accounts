@@ -1,0 +1,30 @@
+/* the edit menu sortable list */
+.edit_sa_menu .col2 {
+  width: 176px;
+}
+.edit_sa_menu .col2 select {
+  width: 174px;
+}
+.edit_sa_menu .col3 {
+  width: 171px;
+}
+.edit_sa_menu .header_row .col3 {
+  width: 171px;
+}
+.edit_sa_menu .col3 input {
+  width: 165px;
+}
+.edit_sa_menu .col4 {
+  width: 190px;
+}
+.edit_sa_menu .rows .col4 {
+  width: 187px;
+  padding-left: 3px;
+}
+.edit_sa_menu .col5 {
+  width: 78px;
+  text-align: center;
+}
+.edit_sa_menu li.col6 {
+  width: 70px;
+}

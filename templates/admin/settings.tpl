@@ -3,7 +3,13 @@
   <table cellpadding="0" cellspacing="0">
   <tr>
     <td width="45"><a href="../"><img src="../images/icon_submission_accounts.gif" border="0" width="34" height="34" /></a></td>
-    <td class="title">{$L.word_settings|upper}</td>
+    <td class="title">
+      <a href="../../../admin/modules">{$LANG.word_modules}</a>
+      <span class="joiner">&raquo;</span>
+      <a href="../">{$L.module_name}</a>
+      <span class="joiner">&raquo;</span>
+      {$L.module_name}
+    </td>
   </tr>
   </table>
 
@@ -34,7 +40,14 @@
     </tr>
     <tr>
       <td class="pad_left_small">Logout URL</td>
-      <td><input type="text" name="logout_url" style="width:98%" value="{$module_settings.logout_url|escape}" /></td>
+      <td>
+        <input type="radio" id="ll1" name="logout_location" value="login_page" {if $module_settings.logout_location == "login_page"}checked{/if} />
+          <label for="ll1">The appropriate login page</label><br />
+        <input type="radio" id="ll2" name="logout_location" value="custom_url"
+          {if $module_settings.logout_location == "custom_url" || $module_settings.logout_location == ""}checked{/if} />
+          <label for="ll2">Custom URL:</label>
+          <input type="text" name="logout_url" style="width:370px" value="{$module_settings.logout_url|escape}" />
+      </td>
     </tr>
     <tr>
       <td class="pad_left_small">Num Users Listed Per Page</td>

@@ -86,7 +86,7 @@
           <th width="160" class="blue">{$L.phrase_if_field}</th>
           <th>{$L.phrase_has_values}</th>
           <th>{$L.phrase_then_use_view}</th>
-          <th class="del" width="60">{$LANG.word_delete|upper}</th>
+          <th class="del"></th>
         </tr>
         {foreach from=$submission_account.view_overrides key=k item=i}
           {assign var="row" value=$i.process_order}
@@ -105,7 +105,7 @@
             <td>
               {views_dropdown name_id="view_override_view_`$row`" form_id=$form_id default=$i.view_id}
             </td>
-            <td class="del" align="center"><a href="#" onclick="return sa_ns.delete_row({$row})">{$LANG.word_delete|upper}</a></td>
+            <td class="del"><a href="#" onclick="return sa_ns.delete_row({$row})"></a></td>
           </tr>
         {/foreach}
         </tbody></table>

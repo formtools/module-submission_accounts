@@ -46,7 +46,7 @@ switch ($action)
 
     $js_array = "[" . join(", ", $js_info) . "]";
 
-    echo "{ success: true, form_id: $form_id, fields: " . $js_array . " }";
+    echo "{ \"success\": true, \"form_id\": $form_id, \"fields\": " . $js_array . " }";
     break;
 }
 

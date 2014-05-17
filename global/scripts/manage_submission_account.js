@@ -1,5 +1,5 @@
 var sa_ns = {};
-sa_ns.form_fields = new Hash();
+sa_ns.form_fields = {};
 sa_ns.num_view_override_rows = 1;
 sa_ns.page_type = "add"; // add / edit
 
@@ -8,24 +8,15 @@ sa_ns.page_type = "add"; // add / edit
  * Called on the Configure (Add) form page, ensuring that all the values are set to their default
  * values & states.
  */
-sa_ns.init_configure_form_page = function()
-{
-  if (sa_ns.page_type == "add")
-  {
-    $("form_id").value = "";
-    $("view_id").disabled = true;
-    $("email_field_id").disabled = true;
-    $("username_field_id").disabled = true;
-    $("password_field_id").disabled = true;
-    $("view_override_field_1").disabled = true;
-    $("view_override_values_1").disabled = true;
-    $("view_override_view_1").disabled = true;
-  }
-  else
-  {
-    sa_ns.num_view_override_rows = $("num_view_override_rows").value;
-    if (sa_ns.num_view_override_rows == 0)
+sa_ns.init_configure_form_page = function() {
+  if (sa_ns.page_type == "add") {
+    $("#form_id").val("");
+    $("#view_id,#email_field_id,#username_field_id,#password_field_id,#view_override_field_1,#view_override_values_1,#view_override_view_1").attr("disabled", "disabled");
+  } else {
+    sa_ns.num_view_override_rows = $("#num_view_override_rows").val();
+    if (sa_ns.num_view_override_rows == 0) {
       sa_ns.add_view_override_row();
+    }
   }
 }
 
@@ -34,47 +25,39 @@ sa_ns.init_configure_form_page = function()
  * Called when the user selects a form from one of the dropdowns in the first column. It shows
  * the appropriate View content in the second column.
  */
-sa_ns.select_form = function(form_id)
-{
-  if (form_id == "")
-  {
-    $("view_id").options.length = 0;
-    $("view_id").options[0] = new Option(g.messages["phrase_please_select_form"], "");
-    $("view_id").disabled = true;
+sa_ns.select_form = function(form_id) {
+  if (form_id == "") {
+    $("#view_id")[0].options.length = 0;
+    $("#view_id")[0].options[0] = new Option(g.messages["phrase_please_select_form"], "");
+    $("#view_id").attr("disabled", "disabled");
     return false;
-  }
-  else
-  {
-    $("view_id").disabled = false;
+  } else {
+    $("#view_id").attr("disabled", "");
     sa_ns.populate_view_dropdown("view_id", form_id);
   }
 
   // query the database for the complete list of form fields
   sa_ns.get_form_fields(form_id);
-
   return false;
 }
 
 
 /**
  * Called whenever the user changes the values in the main View dropdown. If the
- * view isn't set, disable any View override fields .
+ * view isn't set, disable any View override fields.
  */
-sa_ns.update_view_override_table_fields = function()
-{
-  var is_disabled = (!$("view_id").value) ? true : false;
+sa_ns.update_view_override_table_fields = function() {
+  var is_disabled = (!$("#view_id").val()) ? true : false;
 
-  for (var i=1; i<=sa_ns.num_view_override_rows; i++)
-  {
-    if (!$("view_override_field_" + i))
+  for (var i=1; i<=sa_ns.num_view_override_rows; i++) {
+    if (!$("#view_override_field_" + i).length) {
       continue;
+    }
 
-    $("view_override_field_" + i).disabled = is_disabled;
-    $("view_override_values_" + i).disabled = is_disabled;
-    $("view_override_view_" + i).disabled = is_disabled;
+    $("#view_override_field_" + i + ",#view_override_values_" + i + ",#view_override_view_" + i).attr("disabled", (is_disabled) ? "disabled" : "");
 
     // update the contents of the views dropdowns for the row
-    sa_ns.populate_view_dropdown("view_override_view_" + i, $("form_id").value);
+    sa_ns.populate_view_dropdown("view_override_view_" + i, $("#form_id").val());
   }
 }
 
@@ -83,24 +66,21 @@ sa_ns.update_view_override_table_fields = function()
  * Populates a dropdown element with a list of Views including a "Please Select" default
  * option.
  */
-sa_ns.populate_view_dropdown = function(element_id, form_id)
-{
+sa_ns.populate_view_dropdown = function(element_id, form_id) {
   var form_index = null;
-  for (var i=0; i<page_ns.form_views.length; i++)
-  {
-    if (form_id == page_ns.form_views[i][0])
+  for (var i=0; i<page_ns.form_views.length; i++) {
+    if (form_id == page_ns.form_views[i][0]) {
       form_index = i;
+    }
   }
 
-  $(element_id).options.length = 0;
-  $(element_id).options[0] = new Option(g.messages["phrase_please_select"], "");
+  $("#" + element_id)[0].options.length = 0;
+  $("#" + element_id)[0].options[0] = new Option(g.messages["phrase_please_select"], "");
 
-  for (var i=0; i<page_ns.form_views[form_index][1].length; i++)
-  {
+  for (var i=0; i<page_ns.form_views[form_index][1].length; i++) {
     var view_id   = page_ns.form_views[form_index][1][i][0];
     var view_name = page_ns.form_views[form_index][1][i][1];
-
-    $(element_id).options[i+1] = new Option(view_name, view_id);
+    $("#" + element_id)[0].options[i+1] = new Option(view_name, view_id);
   }
 }
 
@@ -108,12 +88,8 @@ sa_ns.populate_view_dropdown = function(element_id, form_id)
 /**
  * Adds a new menu item row.
  */
-sa_ns.add_view_override_row = function()
-{
+sa_ns.add_view_override_row = function() {
   var currRow = ++sa_ns.num_view_override_rows;
-
-  // get the current table
-  var tbody = $("view_override_table").getElementsByTagName("tbody")[0];
 
   var row = document.createElement("tr");
   row.setAttribute("id", "row_" + currRow);
@@ -123,33 +99,25 @@ sa_ns.add_view_override_row = function()
   var sel = document.createElement("select");
   sel.setAttribute("name", "view_override_field_" + currRow);
   sel.setAttribute("id", "view_override_field_" + currRow);
-  sel.appendChild(new Option(g.messages["phrase_please_select"], ""));
+  //sel.appendChild(new Option(g.messages["phrase_please_select"], ""));
 
   // if the user hasn't yet selected a View, just add a default "Please Select" option and disable the field
-  if (!$("view_id").value)
-  {
+  if ($("#view_id").val() == "") {
     sel.setAttribute("disabled", "disabled");
-  }
-  else
-  {
-    if (sa_ns.page_type == "add")
-    {
-      var form_info = sa_ns.form_fields.get("form_" + $("form_id").value);
+  } else {
+    if (sa_ns.page_type == "add") {
+      var form_info = sa_ns.form_fields["form_" + $("#form_id").val()];
       var fields    = form_info.fields;
 
-      for (var i=0; i<fields.length; i++)
-      {
+      for (var i=0; i<fields.length; i++) {
         var field_id    = fields[i][0];
-        var field_title = fields[i][1].unescapeHTML();
+        var field_title = fields[i][1]; // .unescapeHTML();
         sel.appendChild(new Option(field_title, field_id));
       }
-    }
-    else
-    {
+    } else {
       // just copy the fields found in the email field dropdown
-      for (var i=0; i<$("email_field_id").options.length; i++)
-      {
-        sel.appendChild(new Option($("email_field_id").options[i].text, $("email_field_id").options[i].value));
+      for (var i=0; i<$("#email_field_id")[0].options.length; i++) {
+        sel.appendChild(new Option($("#email_field_id")[0].options[i].text, $("#email_field_id")[0].options[i].value));
       }
     }
   }
@@ -163,8 +131,7 @@ sa_ns.add_view_override_row = function()
   inp.setAttribute("name", "view_override_values_" + currRow);
   inp.setAttribute("id", "view_override_values_" + currRow);
 
-  if (!$("view_id").value)
-  {
+  if ($("#view_id").val() == "") {
     inp.setAttribute("disabled", "disabled");
   }
   td2.appendChild(inp);
@@ -176,21 +143,17 @@ sa_ns.add_view_override_row = function()
   sel.setAttribute("id", "view_override_view_" + currRow);
   sel.appendChild(new Option(g.messages["phrase_please_select"], ""));
 
-  if (!$("view_id").value || (sa_ns.page_type == "add" && !$("form_id").value))
-  {
+  if ($("#view_id").val() == "" || (sa_ns.page_type == "add" && $("#form_id").val() == "")) {
     sel.setAttribute("disabled", "disabled");
-  }
-  else
-  {
-    var form_id = $("form_id").value;
+  } else {
+    var form_id = $("#form_id").val();
     var form_index = null;
-    for (var i=0; i<page_ns.form_views.length; i++)
-    {
-      if (form_id == page_ns.form_views[i][0])
+    for (var i=0; i<page_ns.form_views.length; i++) {
+      if (form_id == page_ns.form_views[i][0]) {
         form_index = i;
+      }
     }
-    for (var i=0; i<page_ns.form_views[form_index][1].length; i++)
-    {
+    for (var i=0; i<page_ns.form_views[form_index][1].length; i++) {
       var view_id   = page_ns.form_views[form_index][1][i][0];
       var view_name = page_ns.form_views[form_index][1][i][1];
       sel.appendChild(new Option(view_name, view_id));
@@ -205,8 +168,7 @@ sa_ns.add_view_override_row = function()
   td4.className = "del"; // for IE
   var delete_link = document.createElement("a");
   delete_link.setAttribute("href", "#");
-  delete_link.onclick = function (evt) { return sa_ns.delete_row(currRow); };
-  delete_link.appendChild(document.createTextNode(g.messages["word_delete"].toUpperCase()));
+  delete_link.onclick = function(evt) { return sa_ns.delete_row(currRow); };
   td4.appendChild(delete_link);
 
   row.appendChild(td1);
@@ -214,9 +176,8 @@ sa_ns.add_view_override_row = function()
   row.appendChild(td3);
   row.appendChild(td4);
 
-  tbody.appendChild(row);
-
-  $("num_view_override_rows").value = sa_ns.num_view_override_rows;
+  $("#view_override_table tbody").append(row);
+  $("#num_view_override_rows").val(sa_ns.num_view_override_rows);
 
   return false;
 }
@@ -233,34 +194,30 @@ sa_ns.add_view_override_row = function()
  * something is happening; (b) it stores all View fields in memory in case the user flips back and forth
  * between Forms, eliminating unnecessary database calls.
  */
-sa_ns.get_form_fields = function(form_id)
-{
-  if (form_id == "")
+sa_ns.get_form_fields = function(form_id) {
+  if (form_id == "") {
     return false;
-
-  if (sa_ns.form_fields.get("form_" + form_id))
-  {
-    // if this form's fields haven't been returned from the server, do nothing: it'll be handled by the (asynchronous)
-    // response function
-    var form_info = sa_ns.form_fields.get("form_" + form_id);
-    if (!form_info.is_loaded)
-      return;
-
-    sa_ns.populate_field_dropdowns(form_id);
   }
-  else
-  {
+
+  if (typeof sa_ns.form_fields["form_" + form_id] != 'undefined') {
+    var form_info = sa_ns.form_fields.get("form_" + form_id);
+    if (!form_info.is_loaded) {
+      return;
+    }
+    sa_ns.populate_field_dropdowns(form_id);
+  } else {
     // make a note of the fact that we're loading the fields for this form
-    sa_ns.form_fields.set("form_" + form_id, { is_loaded: false });
+    sa_ns.form_fields["form_" + form_id] = { is_loaded: false };
 
-    $("loading_icon").show();
+    $("#loading_icon").show();
     var url = g.root_url + "/modules/submission_accounts/global/code/actions.php?action=get_form_fields&form_id=" + form_id;
-
-    new Ajax.Request(url, {
-      method: "get",
-      onSuccess: sa_ns.process_json_field_data,
-      onFailure: function() { alert("Couldn't load page: " + url); }
-        });
+    $.ajax({
+      url:      url,
+      type:     "get",
+      dataType: "json",
+      success:  sa_ns.process_json_field_data,
+      error:    ft.error_handler
+    });
   }
 }
 
@@ -269,72 +226,61 @@ sa_ns.get_form_fields = function(form_id)
  * This function is passed the result of the database query for the View fields. It populates sa_ns.view_fields
  * with the View field info.
  */
-sa_ns.process_json_field_data = function(transport)
-{
-  try {
-    var response = transport.responseText.evalJSON();
-  }
-  catch (e)
-  {
-    alert("Error: " + e);
-    return;
-  }
+sa_ns.process_json_field_data = function(data) {
+  var form_id = data.form_id;
 
-  var form_id = response.form_id;
-  var form_info = sa_ns.form_fields.get("form_" + form_id);
-  form_info.fields = response.fields;
+  var form_info = sa_ns.form_fields["form_" + form_id];
+  form_info.fields = data.fields;
   form_info.is_loaded = true;
-  sa_ns.form_fields.set("form_" + form_id, form_info);
+  sa_ns.form_fields["form_" + form_id] = form_info;
 
   // now, if the form is still selected, update the field list
-  var selected_form_id = $("form_id").value;
-  $("loading_icon").hide();
+  var selected_form_id = $("#form_id").val();
+  $("#loading_icon").hide();
 
-  if (selected_form_id == form_id)
+  if (selected_form_id == form_id) {
     sa_ns.populate_field_dropdowns(form_id);
+  }
 }
 
 
-sa_ns.populate_field_dropdowns = function(form_id)
-{
-  var form_info = sa_ns.form_fields.get("form_" + form_id);
+sa_ns.populate_field_dropdowns = function(form_id) {
+  var form_info = sa_ns.form_fields["form_" + form_id];
   var fields = form_info.fields;
 
-  $("email_field_id").disabled = false;
-  $("email_field_id").options.length = 0;
-  $("email_field_id").options[0] = new Option(g.messages["phrase_please_select"], "");
-  $("username_field_id").disabled = false;
-  $("username_field_id").options.length = 0;
-  $("username_field_id").options[0] = new Option(g.messages["phrase_please_select"], "");
-  $("password_field_id").disabled = false;
-  $("password_field_id").options.length = 0;
-  $("password_field_id").options[0] = new Option(g.messages["phrase_please_select"], "");
+  $("#email_field_id")[0].disabled = false;
+  $("#email_field_id")[0].options.length = 0;
+  $("#email_field_id")[0].options[0] = new Option(g.messages["phrase_please_select"], "");
+  $("#username_field_id")[0].disabled = false;
+  $("#username_field_id")[0].options.length = 0;
+  $("#username_field_id")[0].options[0] = new Option(g.messages["phrase_please_select"], "");
+  $("#password_field_id")[0].disabled = false;
+  $("#password_field_id")[0].options.length = 0;
+  $("#password_field_id")[0].options[0] = new Option(g.messages["phrase_please_select"], "");
 
   // update the View override table field dropdowns, too
-  for (var i=1; i<=sa_ns.num_view_override_rows; i++)
-  {
-    if (!$("view_override_field_" + i))
+  for (var i=1; i<=sa_ns.num_view_override_rows; i++) {
+    if (!$("#view_override_field_" + i).length) {
       continue;
+    }
 
-    $("view_override_field_" + i).length = 0;
-    $("view_override_field_" + i).options[0] = new Option(g.messages["phrase_please_select"], "");
+    $("#view_override_field_" + i)[0].length = 0;
+    $("#view_override_field_" + i)[0].options[0] = new Option(g.messages["phrase_please_select"], "");
 
-    for (var j=0; j<fields.length; j++)
-    {
+    for (var j=0; j<fields.length; j++) {
       var field_id    = fields[j][0];
-      var field_title = fields[j][1].unescapeHTML();
-      $("view_override_field_" + i).options[j+1] = new Option(field_title, field_id);
+      var field_title = fields[j][1]; //.unescapeHTML();
+      $("#view_override_field_" + i)[0].options[j+1] = new Option(field_title, field_id);
     }
   }
 
-  for (var i=0; i<fields.length; i++)
-  {
+  for (var i=0; i<fields.length; i++) {
     var field_id    = fields[i][0];
-    var field_title = fields[i][1].unescapeHTML();
+    var field_title = fields[i][1];
 
-    $("email_field_id").options[i+1]    = new Option(field_title, field_id);
-    $("username_field_id").options[i+1] = new Option(field_title, field_id);
-    $("password_field_id").options[i+1] = new Option(field_title, field_id);
+    $("#email_field_id")[0].options[i+1]    = new Option(field_title, field_id);
+    $("#username_field_id")[0].options[i+1] = new Option(field_title, field_id);
+    $("#password_field_id")[0].options[i+1] = new Option(field_title, field_id);
   }
 }
 
@@ -349,29 +295,26 @@ sa_ns.populate_field_dropdowns = function(form_id)
  *
  * @param integer row
  */
-sa_ns.delete_row = function(row)
-{
+sa_ns.delete_row = function(row) {
   // get the current table
-  var tbody = $("view_override_table").getElementsByTagName("tbody")[0];
-  for (i=tbody.childNodes.length-1; i>0; i--)
-  {
-    if (tbody.childNodes[i].id == "row_" + row)
+  var tbody = $("#view_override_table tbody")[0];
+  for (var i=tbody.childNodes.length-1; i>0; i--) {
+    if (tbody.childNodes[i].id == "row_" + row) {
       tbody.removeChild(tbody.childNodes[i]);
+    }
   }
 }
 
 
-sa_ns.toggle_view_override_settings = function()
-{
-  var display_setting = $('view_override_settings').getStyle('display');
-  var is_visible = false;
+sa_ns.toggle_view_override_settings = function() {
+  var display_setting = $("#view_override_settings").css("display");
 
-  if (display_setting == 'none')
-  {
-    Effect.BlindDown($('view_override_settings'));
+  if (display_setting == 'none') {
+    $("#view_override_settings").show("slow");
     is_visible = true;
+  } else {
+    $("#view_override_settings").hide("slow");
+    var is_visible = false;
   }
-  else
-    Effect.BlindUp($('view_override_settings'));
 }
 

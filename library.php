@@ -19,8 +19,8 @@ function submission_accounts__install($module_id)
       email_field_id MEDIUMINT default NULL,
       username_field_id MEDIUMINT default NULL,
       password_field_id MEDIUMINT default NULL,
-      PRIMARY KEY  (form_id)
-    ) TYPE=MyISAM DEFAULT CHARSET=utf8
+      PRIMARY KEY (form_id)
+    ) DEFAULT CHARSET=utf8
       ";
   $queries[] = "
     CREATE TABLE {$g_table_prefix}module_submission_accounts_menus (
@@ -30,15 +30,15 @@ function submission_accounts__install($module_id)
       page_identifier varchar(255) NOT NULL,
       is_submenu ENUM ('yes','no') NOT NULL default 'no',
       list_order tinyint(4) NOT NULL
-    ) TYPE=MyISAM DEFAULT CHARSET=utf8
+    ) DEFAULT CHARSET=utf8
       ";
   $queries[] = "
     CREATE TABLE {$g_table_prefix}module_submission_accounts_data (
       form_id mediumint(9) NOT NULL,
       submission_id mediumint(9) NOT NULL,
       last_logged_in datetime NOT NULL,
-      PRIMARY KEY  (form_id,submission_id)
-    ) TYPE=MyISAM DEFAULT CHARSET=utf8
+      PRIMARY KEY (form_id,submission_id)
+    ) DEFAULT CHARSET=utf8
       ";
 
   $queries[] = "INSERT INTO {$g_table_prefix}settings (setting_name, setting_value, module) VALUES ('login_form_heading', 'Please Log In', 'submission_accounts')";
@@ -46,7 +46,8 @@ function submission_accounts__install($module_id)
   $queries[] = "INSERT INTO {$g_table_prefix}settings (setting_name, setting_value, module) VALUES ('username_field_label', 'Email', 'submission_accounts')";
   $queries[] = "INSERT INTO {$g_table_prefix}settings (setting_name, setting_value, module) VALUES ('password_field_label', 'Password', 'submission_accounts')";
   $queries[] = "INSERT INTO {$g_table_prefix}settings (setting_name, setting_value, module) VALUES ('login_button_label', 'LOGIN', 'submission_accounts')";
-  $queries[] = "INSERT INTO {$g_table_prefix}settings (setting_name, setting_value, module) VALUES ('logout_url', '$g_root_url', 'submission_accounts')";
+  $queries[] = "INSERT INTO {$g_table_prefix}settings (setting_name, setting_value, module) VALUES ('logout_location', 'login_page', 'submission_accounts')";
+  $queries[] = "INSERT INTO {$g_table_prefix}settings (setting_name, setting_value, module) VALUES ('logout_url', '', 'submission_accounts')";
   $queries[] = "INSERT INTO {$g_table_prefix}settings (setting_name, setting_value, module) VALUES ('num_logged_in_users_per_page', 10, 'submission_accounts')";
 
   $queries[] = "
@@ -58,7 +59,7 @@ function submission_accounts__install($module_id)
       view_id mediumint(8) unsigned NOT NULL,
       process_order smallint(5) unsigned NOT NULL,
       PRIMARY KEY (override_id)
-    ) TYPE=MyISAM DEFAULT CHARSET=utf8
+    ) DEFAULT CHARSET=utf8
       ";
 
   $has_problem = false;

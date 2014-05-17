@@ -29,54 +29,38 @@
     {/if}
 
     <form name="login" action="{$same_page}{$query_params}" method="post">
-
-      <table cellpadding="1" class="login_outer_table">
-      <tr>
-        <td colspan="1">
-
-          <table width="100%" cellpadding="0" cellspacing="1" class="login_inner_table">
+      <div class="login_panel margin_bottom_large">
+        <div class="login_panel_inner">
+          <table cellpadding="0" cellspacing="1">
           <tr>
-            <td colspan="2">&nbsp;</td>
+            <td>{$module_settings.username_field_label}</td>
+            <td><input type="text" name="username" value="{$username}" /></td>
           </tr>
           <tr>
-            <td>
-
-              <table width="200" cellpadding="0" cellspacing="1">
-              <tr>
-                <td class="login_table_text" nowrap>{$module_settings.username_field_label}</td>
-                <td><input type="text" size="25" name="username" value="{$username}"></td>
-              </tr>
-              <tr>
-                <td class="login_table_text">{$module_settings.password_field_label}</td>
-                <td><input type="password" size="25" name="password" value=""></td>
-              </tr>
-              </table>
-
-            </td>
-            <td align="center" valign="center" class="pad_left pad_right">
-              <input type="submit" name="login" value="{$module_settings.login_button_label|escape}" />
-            </td>
-          </tr>
-          <tr>
-            <td colspan="2">&nbsp;</td>
+            <td>{$module_settings.password_field_label}</td>
+            <td><input type="password" name="password" value="" /></td>
           </tr>
           </table>
 
-        </td>
-      </tr>
+          <script>
+          document.write('<input type="submit" class="login_submit" name="login" value="{$module_settings.login_button_label|escape}" />');
+          </script>
+          <div class="clear"></div>
+        </div>
 
-      {if $error}
-      <tr>
-        <td colspan="3">
-          <div class="login_error pad_left">{$error}</div>
-        </td>
-      </tr>
-      {/if}
-
-      </table>
-
+        {if $error}
+          <div>
+            <div class="login_error pad_left">{$error}</div>
+          </div>
+        {/if}
+      </div>
     </form>
 
+    <noscript>
+      <div class="error" style="padding:6px;">
+        {$LANG.text_js_required}
+      </div>
+    </noscript>
   {/if}
 
 {include file='footer.tpl'}

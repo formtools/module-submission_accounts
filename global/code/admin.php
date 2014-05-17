@@ -81,9 +81,11 @@ function sa_add_submission_account($info)
  *
  * @return array a hash of submission account configurations
  */
-function sa_get_submission_accounts()
+function sa_get_submission_accounts($params = array())
 {
   global $g_table_prefix;
+
+  $params["include_view_overrides"] = (isset($params["include_view_overrides"])) ? $params["include_view_overrides"] : false;
 
   $query = mysql_query("
     SELECT *, msa.is_active as submission_account_is_active
@@ -94,8 +96,15 @@ function sa_get_submission_accounts()
 
   $results = array();
   while ($row = mysql_fetch_assoc($query))
-    $results[] = $row;
+  {
+  	if ($params["include_view_overrides"])
+  	{
+      $form_id = $row["form_id"];
+      $row["view_overrides"] = sa_get_view_overrides($form_id);
+  	}
 
+    $results[] = $row;
+  }
   return $results;
 }
 
@@ -282,11 +291,14 @@ function sa_update_submission_account($form_id, $info)
 
     case "menu":
       $info = ft_sanitize($info);
+      $sortable_id = $info["sortable_id"];
+
+      $sortable_rows = explode(",", $info["{$sortable_id}_sortable__rows"]);
 
       $menu_items = array();
-      for ($i=1; $i<=$info["num_rows"]; $i++)
+      foreach ($sortable_rows as $i)
       {
-        // if this row doesn't have a page identifier, just ignore it
+        // if this row doesn't have a page identifier, just ignore the row altogether
         if (!isset($info["page_identifier_$i"]) || empty($info["page_identifier_$i"]))
           continue;
 
@@ -298,25 +310,23 @@ function sa_update_submission_account($form_id, $info)
 
         // construct the URL for this menu item
         $url = sa_construct_page_url($page_identifier, $custom_options);
-        $menu_items[$list_order] = array(
+        $menu_items[] = array(
           "url" => $url,
           "page_identifier" => $page_identifier,
           "display_text" => $display_text,
           "is_submenu" => $is_submenu
-            );
+        );
       }
-
-      ksort($menu_items);
 
       mysql_query("DELETE FROM {$g_table_prefix}module_submission_accounts_menus WHERE form_id = $form_id");
 
       $order = 1;
-      foreach ($menu_items as $key => $hash)
+      foreach ($menu_items as $menu_item_info)
       {
-        $url             = $hash["url"];
-        $page_identifier = $hash["page_identifier"];
-        $display_text    = $hash["display_text"];
-        $is_submenu      = $hash["is_submenu"];
+        $url             = $menu_item_info["url"];
+        $page_identifier = $menu_item_info["page_identifier"];
+        $display_text    = $menu_item_info["display_text"];
+        $is_submenu      = $menu_item_info["is_submenu"];
 
         mysql_query("
           INSERT INTO {$g_table_prefix}module_submission_accounts_menus
@@ -328,7 +338,7 @@ function sa_update_submission_account($form_id, $info)
 
       $success = true;
       $message = $L["notify_menu_updated"];
-       break;
+      break;
 
     case "users":
       break;
@@ -460,6 +470,7 @@ function sa_update_settings($info)
     "username_field_label"    => $info["username_field_label"],
     "password_field_label"    => $info["password_field_label"],
     "login_button_label"      => $info["login_button_label"],
+    "logout_location"         => $info["logout_location"],
     "logout_url"              => $info["logout_url"],
     "num_logged_in_users_per_page" => $info["num_logged_in_users_per_page"]
   );
