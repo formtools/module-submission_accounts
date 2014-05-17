@@ -103,7 +103,7 @@
               <input type="text" style="width:98%" name="view_override_values_{$row}" id="view_override_values_{$row}" value="{$i.match_values|escape}" />
             </td>
             <td>
-              {views_dropdown name_id="view_override_view_`$row`" form_id=$form_id default=$i.view_id}
+              {views_dropdown name_id="view_override_view_`$row`" form_id=$form_id selected=$i.view_id}
             </td>
             <td class="del"><a href="#" onclick="return sa_ns.delete_row({$row})"></a></td>
           </tr>

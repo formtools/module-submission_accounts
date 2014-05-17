@@ -93,7 +93,7 @@ $submission_placeholders = ft_get_submission_placeholders($form_id, $submission_
 $edit_submission_page_label = ft_eval_smarty_string($form_info["edit_submission_page_label"], $submission_placeholders);
 
 // get all the shared resources
-$settings = ft_get_settings();
+$settings = ft_get_settings("", "core");
 $shared_resources_list = $settings["edit_submission_onload_resources"];
 $shared_resources_array = explode("|", $shared_resources_list);
 $shared_resources = "";
@@ -109,6 +109,7 @@ $page_vars = array();
 $page_vars["page"]   = "client_edit_submission";
 $page_vars["page_url"] = ft_get_page_url("client_edit_submission");
 $page_vars["tabs"] = $tabs;
+$page_vars["settings"] = $settings;
 $page_vars["grouped_views"] = $grouped_views;
 $page_vars["tab_number"] = $tab_number;
 $page_vars["page_field_ids"] = $page_field_ids;
@@ -121,7 +122,6 @@ $page_vars["tab_has_editable_fields"] = count($editable_tab_fields) > 0;
 $page_vars["view_info"] = $view_info;
 $page_vars["form_id"] = $form_id;
 $page_vars["view_id"] = $view_id;
-$page_vars["view_info"] = $view_info;
 $page_vars["edit_submission_page_label"] = $edit_submission_page_label;
 $page_vars["page_field_ids"] = $page_field_ids;
 $page_vars["page_field_ids_str"] = implode(",", $page_field_ids);
