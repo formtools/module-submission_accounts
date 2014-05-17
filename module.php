@@ -7,8 +7,8 @@
 $MODULE["author"]          = "Encore Web Studios";
 $MODULE["author_email"]    = "formtools@encorewebstudios.com";
 $MODULE["author_link"]     = "http://modules.formtools.org";
-$MODULE["version"]         = "1.2.6";
-$MODULE["date"]            = "2011-10-07";
+$MODULE["version"]         = "1.2.7";
+$MODULE["date"]            = "2011-11-06";
 $MODULE["origin_language"] = "en_us";
 
 // define the module navigation - the keys are keys defined in the language file. This lets

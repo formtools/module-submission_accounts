@@ -18,6 +18,7 @@ $L = ft_get_module_lang_file_contents("submission_accounts");
 // get the default settings
 $settings = ft_get_settings();
 $g_theme  = $settings["default_theme"];
+$g_swatch = $settings["default_client_swatch"];
 
 // now, if there's a form ID available (e.g. passed to the page via GET or POST), see if the form has been
 // configured with submission accounts and if so, use the theme associated with the form
@@ -27,7 +28,10 @@ if (!empty($form_id))
 {
   $submission_account = sa_get_submission_account($form_id);
   if (isset($submission_account["form_id"]) && $submission_account["submission_account_is_active"] == "yes")
+  {
     $g_theme = $submission_account["theme"];
+    $g_swatch = $submission_account["swatch"];
+  }
   else if (isset($submission_account["submission_account_is_active"]) && $submission_account["submission_account_is_active"] == "no")
   {
     $main_error = true;
@@ -67,4 +71,4 @@ var rules = [];
 rules.push("required,email,{$L["validation_no_email"]}");
 END;
 
-ft_display_module_page("templates/forget_password.tpl", $page_vars, $g_theme);
+ft_display_module_page("templates/forget_password.tpl", $page_vars, $g_theme, $g_swatch);
