@@ -1,4 +1,4 @@
-{include file="header.tpl"}
+{ft_include file="header.tpl"}
 
   <table cellpadding="0" cellspacing="0">
   <tr>
@@ -7,7 +7,7 @@
   </tr>
   </table>
 
-  {include file='messages.tpl'}
+  {ft_include file='messages.tpl'}
 
   <div class="margin_bottom_large">
     {$text_forgot_password}
@@ -34,4 +34,4 @@
     <a href="login.php">{$LANG.phrase_login_panel_leftarrows}</a>
   </div>
 
-{include file="footer.tpl"}
+{ft_include file="footer.tpl"}

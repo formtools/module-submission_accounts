@@ -1,24 +1,33 @@
 <?php
 
 require_once("../../global/library.php");
-ft_init_module_page();
-$folder = dirname(__FILE__);
-require_once("$folder/library.php");
-$request = array_merge($_POST, $_GET);
 
-if (isset($request["add_form"]))
-  list($g_success, $g_message) = sa_add_submission_account($request);
-else if (isset($request["delete"]))
-  list($g_success, $g_message) = sa_delete_submission_account($request["delete"]);
+use FormTools\Core;
+use FormTools\Modules;
+
+$module = Modules::initModulePage("admin");
+$LANG = Core::$L;
+
+$success = true;
+$message = "";
+if (isset($request["add_form"])) {
+    list($success, $message) = sa_add_submission_account($request);
+} else {
+    if (isset($request["delete"])) {
+        list($success, $message) = sa_delete_submission_account($request["delete"]);
+    }
+}
 
 $submission_accounts = sa_get_submission_accounts(array("include_view_overrides" => true));
 
-// ------------------------------------------------------------------------------------------------
+$page_vars = array(
+    "g_success" => $success,
+    "g_message" => $message,
+    "js_messages" => array("word_edit"),
+    "submission_accounts" => $submission_accounts,
+);
 
-$page_vars = array();
-$page_vars["js_messages"] = array("word_edit");
-$page_vars["submission_accounts"] = $submission_accounts;
-$page_vars["head_js"] =<<<EOF
+$page_vars["head_js"] =<<< END
 
 var page_ns = {};
 page_ns.delete_form = function(form_id) {
@@ -42,6 +51,6 @@ page_ns.delete_form = function(form_id) {
 
   return false;
 }
-EOF;
+END;
 
-ft_display_module_page("templates/index.tpl", $page_vars);
+$module->displayPage("templates/index.tpl", $page_vars);

@@ -1,4 +1,4 @@
-{include file='header.tpl'}
+{ft_include file='header.tpl'}
 
   {if $main_error}
 
@@ -17,7 +17,7 @@
     </tr>
     </table>
 
-    {include file="messages.tpl"}
+    {ft_include file="messages.tpl"}
 
     {if $module_settings.login_form_welcome_text || $submission_account.email_field_id}
       <div class="margin_bottom_large">
@@ -63,4 +63,4 @@
     </noscript>
   {/if}
 
-{include file='footer.tpl'}
+{ft_include file='footer.tpl'}
