@@ -1,4 +1,4 @@
-  {include file="messages.tpl"}
+  {ft_include file="messages.tpl"}
 
     <form action="{$same_page}" method="post" onsubmit="sa_ns.update_menu_submit()">
       <input type="hidden" name="num_rows" id="num_rows" value="{$submission_account.menu_items|@count}" />

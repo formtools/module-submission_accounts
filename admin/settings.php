@@ -1,21 +1,24 @@
 <?php
 
 require_once("../../../global/library.php");
-ft_init_module_page();
-require_once("../library.php");
-$request = array_merge($_POST, $_GET);
 
-if (isset($request["update_settings"]))
-  list ($g_success, $g_message) = sa_update_settings($request);
+use FormTools\Modules;
 
+$module = Modules::initModulePage("admin");
+$L = $module->getLangStrings();
 
-$module_settings = ft_get_module_settings();
+$success = true;
+$message = "";
+if (isset($request["update_settings"])) {
+    list ($success, $message) = sa_update_settings($request);
+}
 
-// ------------------------------------------------------------------------------------------------
+$page_vars = array(
+    "g_success" => $success,
+    "g_message" => $message,
+    "head_title" => $L["module_name"],
+    "module_settings" => $module->getSettings(),
+    "head_js" => ""
+);
 
-$page_vars = array();
-$page_vars["head_title"] = $L["module_name"];
-$page_vars["module_settings"] = $module_settings;
-$page_vars["head_js"] = "";
-
-ft_display_module_page("templates/admin/settings.tpl", $page_vars);
+$module->displayPage("templates/admin/settings.tpl", $page_vars);

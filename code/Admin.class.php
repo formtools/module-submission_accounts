@@ -12,7 +12,6 @@ use PDO, Exception;
 
 class Admin
 {
-
     /**
      * Adds a submission account to the database.
      *

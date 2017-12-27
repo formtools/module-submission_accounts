@@ -1,4 +1,4 @@
-{include file='modules_header.tpl'}
+{ft_include file='modules_header.tpl'}
 
   <span id="loading_icon" style="display:none"><img src="{$images_url}/ajax_loading.gif" /></span>
 
@@ -15,7 +15,7 @@
   </tr>
   </table>
 
-  {include file='tabset_open.tpl'}
+  {ft_include file='tabset_open.tpl'}
 
     {if $page == "main"}
       {include file='../../modules/submission_accounts/templates/admin/tab_main.tpl'}
@@ -29,6 +29,6 @@
       {include file='../../modules/submission_accounts/templates/admin/tab_main.tpl'}
     {/if}
 
-  {include file='tabset_close.tpl'}
+  {ft_include file='tabset_close.tpl'}
 
-{include file='modules_footer.tpl'}
+{ft_include file='modules_footer.tpl'}

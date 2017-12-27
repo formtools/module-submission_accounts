@@ -1,25 +1,31 @@
 <?php
 
 require_once("../../../global/library.php");
-ft_init_module_page();
-require_once("../library.php");
+
+use FormTools\Core;
+use FormTools\Modules;
+use FormTools\Modules\SubmissionAccounts\Admin;
+
+$module = Modules::initModulePage("admin");
+$L = $module->getLangStrings();
+$LANG = Core::$L;
 
 // get a list of forms that already have a submission account configured. These are omitted from the
 // list of available forms
-$submission_accounts = sa_get_submission_accounts();
+$submission_accounts = Admin::getSubmissionAccounts();
 $omit_forms = array();
-foreach ($submission_accounts as $configured_form)
-  $omit_forms[] = $configured_form["form_id"];
+foreach ($submission_accounts as $configured_form) {
+    $omit_forms[] = $configured_form["form_id"];
+}
 
-$js = sa_get_form_view_mapping_js();
+$js = Admin::getFormViewMappingJs();
 
-// ------------------------------------------------------------------------------------------------
+$page_vars = array(
+    "omit_forms" => $omit_forms,
+    "js_messages" => array("phrase_please_select", "phrase_please_select_form", "word_delete")
+);
 
-$page_vars = array();
-$page_vars["omit_forms"] = $omit_forms;
-$page_vars["js_messages"] = array("phrase_please_select", "phrase_please_select_form", "word_delete");
-$page_vars["head_string"] = "<script src=\"../global/scripts/manage_submission_account.js?v=2\"></script>";
-$page_vars["head_js"] =<<< EOF
+$page_vars["head_js"] = <<< END
 $js
 
 var rules = [];
@@ -40,6 +46,6 @@ function validate_swatch() {
 }
 
 $(sa_ns.init_configure_form_page);
-EOF;
+END;
 
-ft_display_module_page("templates/admin/add.tpl", $page_vars);
+$module->displayPage("templates/admin/add.tpl", $page_vars);

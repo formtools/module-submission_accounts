@@ -210,7 +210,7 @@ sa_ns.get_form_fields = function(form_id) {
     sa_ns.form_fields["form_" + form_id] = { is_loaded: false };
 
     $("#loading_icon").show();
-    var url = g.root_url + "/modules/submission_accounts/global/code/actions.php?action=get_form_fields&form_id=" + form_id;
+    var url = g.root_url + "/modules/submission_accounts/code/actions.php?action=get_form_fields&form_id=" + form_id;
     $.ajax({
       url:      url,
       type:     "get",
@@ -303,18 +303,16 @@ sa_ns.delete_row = function(row) {
       tbody.removeChild(tbody.childNodes[i]);
     }
   }
-}
+};
 
 
 sa_ns.toggle_view_override_settings = function() {
   var display_setting = $("#view_override_settings").css("display");
 
   if (display_setting == 'none') {
-    $("#view_override_settings").show("slow");
-    is_visible = true;
+    $("#view_override_settings").show();
   } else {
-    $("#view_override_settings").hide("slow");
-    var is_visible = false;
+    $("#view_override_settings").hide();
   }
-}
+};
 

@@ -1,6 +1,6 @@
-{include file='modules_header.tpl'}
+{ft_include file='modules_header.tpl'}
 
-  <span id="loading_icon" style="display:none"><img src="{$images_url}/ajax_loading.gif" /></span>
+  <span id="loading_icon" style="display:none"><img src="{$g_root_url}/global/images/loading.gif" /></span>
 
   <table cellpadding="0" cellspacing="0">
   <tr>
@@ -15,7 +15,7 @@
   </tr>
   </table>
 
-  {include file="messages.tpl"}
+  {ft_include file="messages.tpl"}
 
   <div class="margin_bottom_large">
     {$L.text_add_submission_account_intro}
@@ -45,7 +45,7 @@
     <tr>
       <td class="red" align="center">*</td>
       <td class="pad_left_small">{$LANG.word_theme}</td>
-      <td>{themes_dropdown name_id="theme" default=$submission_account.theme}</td>
+      <td>{themes_dropdown name_id="theme"}</td>
     </tr>
     <tr>
       <td class="red" align="center"> </td>
@@ -123,5 +123,4 @@
 
   </form>
 
-
-{include file='modules_footer.tpl'}
+{ft_include file='modules_footer.tpl'}

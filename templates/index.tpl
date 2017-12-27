@@ -37,7 +37,7 @@
       <th class="edit"></th>
       <th class="del"></th>
     </tr>
-    {foreach from=$submission_accounts item=info row=row}
+    {foreach from=$submission_accounts item=info}
     <tr>
       <td class="medium_grey" align="center">{$info.form_id}</td>
       <td class="pad_left_small"><a href="../../admin/forms/submissions.php?form_id={$info.form_id}">{$info.form_name}</a></td>

@@ -4,9 +4,11 @@ require_once("../../global/library.php");
 
 use FormTools\Core;
 use FormTools\Modules;
+use FormTools\Modules\SubmissionAccounts\Admin;
 
 $module = Modules::initModulePage("admin");
 $LANG = Core::$L;
+$L = $module->getLangStrings();
 
 $success = true;
 $message = "";
@@ -18,13 +20,13 @@ if (isset($request["add_form"])) {
     }
 }
 
-$submission_accounts = sa_get_submission_accounts(array("include_view_overrides" => true));
+$submission_accounts = Admin::getSubmissionAccounts(array("include_view_overrides" => true));
 
 $page_vars = array(
     "g_success" => $success,
     "g_message" => $message,
     "js_messages" => array("word_edit"),
-    "submission_accounts" => $submission_accounts,
+    "submission_accounts" => $submission_accounts
 );
 
 $page_vars["head_js"] =<<< END

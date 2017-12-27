@@ -1,14 +1,16 @@
 <?php
 
 require_once("../../../global/library.php");
-ft_init_module_page();
-require_once("../library.php");
 
-$section = ft_load_module_field("submission_accounts", "section", "section", "about");
+use FormTools\Modules;
 
-// ------------------------------------------------------------------------------------------------
+$module = Modules::initModulePage("admin");
+$L = $module->getLangStrings();
 
-$page_vars = array();
-$page_vars["head_title"] = $L["module_name"];
+$section = Modules::loadModuleField("submission_accounts", "section", "section", "about");
 
-ft_display_module_page("templates/admin/help.tpl", $page_vars);
+$page_vars = array(
+    "head_title" => $L["module_name"]
+);
+
+$module->displayPage("templates/admin/help.tpl", $page_vars);

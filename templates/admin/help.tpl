@@ -1,4 +1,4 @@
-{include file='modules_header.tpl'}
+{ft_include file='modules_header.tpl'}
 
   <table cellpadding="0" cellspacing="0">
   <tr>
@@ -17,4 +17,4 @@
     For help on how to use this module, please see the <a href="http://modules.formtools.org/submission_accounts/">module help documentation</a>.
   </p>
 
-{include file='modules_footer.tpl'}
+{ft_include file='modules_footer.tpl'}

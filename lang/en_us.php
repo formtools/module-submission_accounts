@@ -61,7 +61,7 @@ $L["confirm_delete_form"] = "Are you sure you want to delete this Submission Acc
 
 $L["text_forget_password_link"] = "If you have forgotten your password, <a href=\"forget_password.php\">click here</a>.";
 $L["text_forgot_password"] = "No problem. Just enter your email below and your login information will be sent to you. If you encounter problems, please email the site administrator at {\$site_admin_email}.";
-$L["text_add_submission_account_intro"] = "Use the form below to configure the submission accounts for one of your forms. Please see the <a href=\"http://modules.formtools.org/submission_accounts/?page=configure_new_form\">help pages</a> for more information.";
+$L["text_add_submission_account_intro"] = "Use the form below to configure the submission accounts for one of your forms. Please see the <a href=\"https://docs.formtools.org/modules/submission_accounts/configure_new_form/\">help pages</a> for more information.";
 $L["text_html_tab"] = "This tabs lets you generate a custom login form to embed within your own webpages, rather than forcing your users to login via the <a href=\"{\$LOGINURL}\" target=\"_blank\">built-in login form</a>. <b>Note: you always need to be logged out of Form Tools in order to log into the Submission Accounts module.";
 $L["text_include_forget_password"] = "Include \"Forget Password\" link <span class=\"light_grey\">(only available if you have defined the email field)</span>";
 $L["text_view_override_intro"] = "This section lets you override the default View specified above, depending on the submission content. In other words, you can use this section to show different fields for different users, depending on what form values they have.";

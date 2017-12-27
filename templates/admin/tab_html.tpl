@@ -1,4 +1,4 @@
-  {include file="messages.tpl"}
+  {ft_include file="messages.tpl"}
 
   <div class="margin_bottom_large">
     {$text_html_tab}
