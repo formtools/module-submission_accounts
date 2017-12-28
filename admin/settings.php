@@ -3,6 +3,7 @@
 require_once("../../../global/library.php");
 
 use FormTools\Modules;
+use FormTools\Modules\SubmissionAccounts\Admin;
 
 $module = Modules::initModulePage("admin");
 $L = $module->getLangStrings();
@@ -10,7 +11,7 @@ $L = $module->getLangStrings();
 $success = true;
 $message = "";
 if (isset($request["update_settings"])) {
-    list ($success, $message) = sa_update_settings($request);
+    list ($success, $message) = Admin::updateSettings($request, $L);
 }
 
 $page_vars = array(
