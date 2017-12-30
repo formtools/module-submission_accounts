@@ -17,14 +17,14 @@ use FormTools\ViewFields;
 use FormTools\ViewTabs;
 
 $module = Modules::initModulePage("user");
+
 $root_url = Core::getRootUrl();
 
 $form_id = Sessions::get("account.form_id");
 $view_id = Sessions::get("account.view_id");
 $submission_id = Sessions::get("account.submission_id");
 
-// store the form ID as the current form ID. This is used in a few places, including the delete file Ajax
-// function
+// store the form ID as the current form ID. This is used in a few places, including the delete file Ajax function
 Sessions::set("curr_form_id", $form_id);
 
 $tab_number = Modules::loadModuleField("submission_accounts", "tab", "view_{$view_id}_current_tab", 1);
@@ -97,12 +97,14 @@ $shared_resources_list = $settings["edit_submission_onload_resources"];
 $shared_resources_array = explode("|", $shared_resources_list);
 $shared_resources = "";
 foreach ($shared_resources_array as $resource) {
-    $shared_resources .= General::evalSmartyString($resource, array("g_root_url" => $g_root_url)) . "\n";
+    $shared_resources .= General::evalSmartyString($resource, array("g_root_url" => $root_url)) . "\n";
 }
 
 $validation_js = FieldValidation::generateSubmissionJsValidation($grouped_fields);
 
 $page_vars = array(
+    "g_success" => $success,
+    "g_message" => $message,
     "page" => "client_edit_submission",
     "page_url" => Pages::getPageUrl("client_edit_submission"),
     "tabs" => $tabs,

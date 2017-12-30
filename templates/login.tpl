@@ -28,13 +28,13 @@
       </div>
     {/if}
 
-    <form name="login" action="{$same_page}{$query_params}" method="post">
+    <form name="login" action="{$same_page}" method="post">
       <div class="login_panel margin_bottom_large">
         <div class="login_panel_inner">
           <table cellpadding="0" cellspacing="1">
           <tr>
             <td>{$module_settings.username_field_label}</td>
-            <td><input type="text" name="username" value="{$username}" /></td>
+            <td><input type="text" name="username" value="{$username}" autofocus /></td>
           </tr>
           <tr>
             <td>{$module_settings.password_field_label}</td>

@@ -111,15 +111,15 @@ class Users
         $db->query("
             SELECT *
             FROM   {PREFIX}form_{$form_id}
-            WHERE  $username_col = :value
+            WHERE  $username_col = :username
         ");
-        $db->bind("value", $info["username"]);
+        $db->bind("username", $info["username"]);
         $db->execute();
         $submissions = $db->fetchAll();
 
         // since there may be multiple users with the same username (we're relying on the administrator to enforce it, we'll
         // assume they've been a little lapse in their duties...), loop through all results found and log them in under the
-        // FIRST user that matches the exact username-password combo
+        // FIRST user that matches the exact username-password combo.
         $account_found = false;
         $submission_info = array();
         foreach ($submissions as $submission) {
@@ -186,15 +186,24 @@ class Users
         // now figure out what View the user's supposed to see
         $view_id = self::getSubmissionView($form_id, $submission_id);
 
+        $settings = Settings::get();
+
         Sessions::clearAll();
         Sessions::set("account", array(
             "is_logged_in" => true,
+
+            // the secret sauce to allow the User->checkAuth method to accept this user. The whole auth is in need of refactoring.
+            "account_id" => "user",
+            "account_type" => "user",
+
             "theme" => $submission_account["theme"],
             "swatch" => $submission_account["swatch"],
+            "ui_language" => "en_us", // always in English right now
+            "timezone_offset" => $settings["default_timezone_offset"],
             "form_id" => $form_id,
             "view_id" => $view_id,
             "submission_id" => $submission_info["submission_id"],
-            "settings" => Settings::get()
+            "settings" => $settings
         ));
 
         $menu_template_info = self::cacheAccountMenu($form_id);
@@ -221,7 +230,7 @@ class Users
     {
         $root_url = Core::getRootUrl();
 
-        $menu_info = self::getFormMenu($form_id);
+        $menu_info = Admin::getFormMenu($form_id);
 
         $menu_template_info = array();
         for ($i = 0; $i < count($menu_info); $i++) {

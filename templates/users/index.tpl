@@ -35,7 +35,7 @@
         {/if}
 
         {foreach from=$fields item=curr_field}
-          {assign var=field_id value=$field.field_id}
+          {assign var=field_id value=$curr_field.field_id}
           <tr>
             <td width="150" class="pad_left_small" valign="top">{$curr_field.field_title} <span class="req">{if $curr_field.is_required}*{/if}</span></td>
             <td valign="top">

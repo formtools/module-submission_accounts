@@ -3,9 +3,11 @@
 require_once("../../global/library.php");
 
 use FormTools\Administrator;
+use FormTools\General;
 use FormTools\Modules;
 use FormTools\Settings;
 use FormTools\Modules\SubmissionAccounts\Admin;
+use FormTools\Modules\SubmissionAccounts\Users;
 
 $module = Modules::initModulePage();
 
@@ -24,6 +26,7 @@ $g_swatch = $settings["default_client_swatch"];
 // now, if there's a form ID available (e.g. passed to the page via GET or POST), see if the form has been
 // configured with submission accounts and if so, use the theme associated with the form
 $form_id = Modules::loadModuleField("submission_accounts", "form_id", "form_id", "");
+
 $submission_account = array();
 if (!empty($form_id)) {
     $submission_account = Admin::getSubmissionAccount($form_id);
@@ -46,8 +49,10 @@ if (!empty($form_id)) {
 }
 
 // if trying to send password
+$success = true;
+$message = "";
 if (isset($_POST["send_password"])) {
-    list($g_success, $g_message) = sa_send_password($form_id, $_POST);
+    list($success, $message) = Users::sendPassword($form_id, $_POST, $L);
 }
 
 $admin_info = Administrator::getAdminInfo();
@@ -55,15 +60,19 @@ $admin_email = $admin_info["email"];
 
 $replacements = array("site_admin_email" => "<a href=\"mailto:$admin_email\">$admin_email</a>");
 
-$page_vars = array();
-$page_vars["text_forgot_password"] = ft_eval_smarty_string($L["text_forgot_password"], $replacements);
-$page_vars["error"] = $error;
-$page_vars["submission_account"] = $submission_account;
-$page_vars["main_error"] = $main_error; // an error SO BAD it prevents the login form from appearing
-$page_vars["module_settings"] = $module_settings;
+$page_vars = array(
+    "g_success" => $success,
+    "g_message" => $message,
+    "text_forgot_password" => General::evalSmartyString($L["text_forgot_password"], $replacements),
+    "error" => $error,
+    "submission_account" => $submission_account,
+    "main_error" => $main_error, // an error SO BAD it prevents the login form from appearing
+    "module_settings" => $module_settings
+);
+
 $page_vars["head_js"] = <<< END
 var rules = [];
 rules.push("required,email,{$L["validation_no_email"]}");
 END;
 
-ft_display_module_page("templates/forget_password.tpl", $page_vars, $g_theme, $g_swatch);
+$module->displayPage("templates/forget_password.tpl", $page_vars, $g_theme, $g_swatch);

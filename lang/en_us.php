@@ -52,7 +52,7 @@ $L["notify_form_configured"] = "This form has been configured for submission acc
 $L["notify_submission_account_updated"] = "The submission account has been updated for this form.";
 $L["notify_menu_updated"] = "The menu has been updated.";
 $L["notify_settings_updated"] = "The settings have been updated.";
-$L["notify_login_no_form_id"] = "Sorry, there has been no form ID passed to this page. In order to display the login form, a <b>form_id</b> value must to be passed to this page via POST or GET. Please see the <a href=\"http://modules.formtools.org/submission_accounts/?page=logging_in\">user documentation</a>.";
+$L["notify_login_no_form_id"] = "Sorry, there has been no form ID passed to this page. In order to display the login form, a <b>form_id</b> value must to be passed to this page via POST or GET. Please see the <a href=\"https://docs.formtools.org/modules/submission_accounts/logging_in/\">user documentation</a>.";
 $L["notify_submission_account_inactive"] = "Sorry, user accounts are currently inactive for this form.";
 $L["notify_submission_account_data_deleted"] = "The user login data has been cleared.";
 $L["notify_problem_installing"] = "There following error occurred when trying to create the database tables for this module: <b>{\$error}</b>";

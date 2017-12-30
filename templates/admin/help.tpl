@@ -14,7 +14,7 @@
   </table>
 
   <p>
-    For help on how to use this module, please see the <a href="http://modules.formtools.org/submission_accounts/">module help documentation</a>.
+    For help on how to use this module, please see the <a href="https://docs.formtools.org/modules/submission_accounts/">module help documentation</a>.
   </p>
 
 {ft_include file='modules_footer.tpl'}
