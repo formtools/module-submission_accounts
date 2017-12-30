@@ -12,7 +12,7 @@
   <table cellspacing="0" cellpadding="0" width="100%" class="margin_bottom">
   <tr>
     <td nowrap width="30"><input type="checkbox" id="use_redirect_url" onchange="lf_ns.generate()" /></td>
-    <td nowrap width="50"><label class="pad_right" for="use_redirect_url">{$L.phrase_redirect_failed_logins_c}</label></td>
+    <td nowrap width="240"><label class="pad_right" for="use_redirect_url">{$L.phrase_redirect_failed_logins_c}</label></td>
     <td><input type="text" style="width:100%" id="redirect_url" onkeyup="lf_ns.generate()" /></td>
   </tr>
   <tr>
@@ -33,9 +33,7 @@
   </div>
 
   <script>
-  var html_editor = new CodeMirror.fromTextArea("html", {literal}{{/literal}
-  parserfile: ["parsexml.js"],
-  path: "{$g_root_url}/global/codemirror/js/",
-  stylesheet: "{$g_root_url}/global/codemirror/css/xmlcolors.css"
+  var html_editor = new CodeMirror.fromTextArea(document.getElementById("html"), {literal}{{/literal}
+  mode: "htmlmixed"
   {literal}});{/literal}
   </script>

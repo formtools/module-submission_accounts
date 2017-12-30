@@ -7,22 +7,27 @@ use FormTools\Modules\SubmissionAccounts\Admin;
 
 $submission_account = Admin::getSubmissionAccount($form_id);
 $module_settings = $module->getSettings();
+$L = $module->getLangStrings();
 
-if (isset($request["clear_results"]))
-  list ($g_success, $g_message) = Admin::deleteSubmissionAccountData($form_id, $L);
-
+$success = true;
+$message = "";
+if (isset($request["clear_results"])) {
+    list ($success, $message) = Admin::deleteSubmissionAccountData($form_id, $L);
+}
 
 // get the db column name which contains the username
 $field_info = Fields::getFormField($submission_account["username_field_id"]);
 $username_col = $field_info["col_name"];
 
 $users_page = Modules::loadModuleField("submission_accounts", "users_page", "users_page", 1);
-$account_data = Admin::getSubmissionAccountData($form_id, $users_page, $username_col);
+$account_data = Admin::getSubmissionAccountData($form_id, $users_page, $username_col, $L);
 
 $num_results = $account_data["num_results"];
-$results     = $account_data["results"];
+$results = $account_data["results"];
 
 $page_vars = array(
+    "g_success" => $success,
+    "g_message" => $message,
     "submission_account" => $submission_account,
     "form_id" => $form_id,
     "tabs" => $tabs,
@@ -33,7 +38,8 @@ $page_vars = array(
     "username_col" => $username_col,
     "module_settings" => $module_settings,
     "js_messages" => array(
-        "phrase_please_select", "phrase_please_select_form"
+        "phrase_please_select",
+        "phrase_please_select_form"
     )
 );
 

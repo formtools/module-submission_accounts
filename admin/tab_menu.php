@@ -27,7 +27,7 @@ $page_vars = array(
     "form_fields" => $form_fields,
     "js_messages" => array("phrase_please_select", "phrase_please_select_form", "word_na", "word_remove"),
     "js_files" => array(
-        "$root_url/global/scripts/manage_user_menu.js",
+        "$root_url/modules/submission_accounts/scripts/manage_user_menu.js",
         "$root_url/global/scripts/sortable.js"
     )
 );

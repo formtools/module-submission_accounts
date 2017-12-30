@@ -18,8 +18,7 @@ $page_vars = array(
     "g_success" => $success,
     "g_message" => $message,
     "head_title" => $L["module_name"],
-    "module_settings" => $module->getSettings(),
-    "head_js" => ""
+    "module_settings" => $module->getSettings()
 );
 
 $module->displayPage("templates/admin/settings.tpl", $page_vars);

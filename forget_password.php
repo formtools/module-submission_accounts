@@ -2,7 +2,10 @@
 
 require_once("../../global/library.php");
 
+use FormTools\Administrator;
 use FormTools\Modules;
+use FormTools\Settings;
+use FormTools\Modules\SubmissionAccounts\Admin;
 
 $module = Modules::initModulePage();
 
@@ -10,20 +13,21 @@ $module = Modules::initModulePage();
 $main_error = false;
 $error = "";
 
-$module_settings = ft_get_module_settings("", "submission_accounts");
-$L = ft_get_module_lang_file_contents("submission_accounts");
+$module_settings = $module->getSettings();
+$L = $module->getLangStrings();
 
 // get the default settings
-$settings = ft_get_settings();
+$settings = Settings::get();
 $g_theme = $settings["default_theme"];
 $g_swatch = $settings["default_client_swatch"];
 
 // now, if there's a form ID available (e.g. passed to the page via GET or POST), see if the form has been
 // configured with submission accounts and if so, use the theme associated with the form
-$form_id = ft_load_module_field("submission_accounts", "form_id", "form_id", "");
+$form_id = Modules::loadModuleField("submission_accounts", "form_id", "form_id", "");
 $submission_account = array();
 if (!empty($form_id)) {
-    $submission_account = sa_get_submission_account($form_id);
+    $submission_account = Admin::getSubmissionAccount($form_id);
+
     if (isset($submission_account["form_id"]) && $submission_account["submission_account_is_active"] == "yes") {
         $g_theme = $submission_account["theme"];
         $g_swatch = $submission_account["swatch"];
@@ -46,7 +50,7 @@ if (isset($_POST["send_password"])) {
     list($g_success, $g_message) = sa_send_password($form_id, $_POST);
 }
 
-$admin_info = ft_get_admin_info();
+$admin_info = Administrator::getAdminInfo();
 $admin_email = $admin_info["email"];
 
 $replacements = array("site_admin_email" => "<a href=\"mailto:$admin_email\">$admin_email</a>");

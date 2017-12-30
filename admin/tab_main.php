@@ -1,13 +1,21 @@
 <?php
 
+use FormTools\Core;
+use FormTools\Fields;
+use FormTools\Modules\SubmissionAccounts\Admin;
+
+$root_url = Core::getRootUrl();
+
+$success = true;
+$message = "";
 if (isset($request["update"])) {
     $request["tab"] = "main";
-    list ($g_success, $g_message) = sa_update_submission_account($form_id, $request);
+    list ($success, $message) = Admin::updateSubmissionAccount($form_id, $request, $L);
 }
 
 // get a list of forms that already have a submission account configured. These are omitted from the
 // list of available forms
-$submission_accounts = sa_get_submission_accounts();
+$submission_accounts = Admin::getSubmissionAccounts();
 $omit_forms = array();
 foreach ($submission_accounts as $configured_form) {
     if ($configured_form["form_id"] != $form_id) {
@@ -15,11 +23,13 @@ foreach ($submission_accounts as $configured_form) {
     }
 }
 
-$js = sa_get_form_view_mapping_js();
-$submission_account = sa_get_submission_account($form_id);
-$form_fields = ft_get_form_fields($form_id);
+$js = Admin::getFormViewMappingJs();
+$submission_account = Admin::getSubmissionAccount($form_id);
+$form_fields = Fields::getFormFields($form_id);
 
 $page_vars = array(
+    "g_success" => $success,
+    "g_message" => $message,
     "submission_account" => $submission_account,
     "omit_forms" => $omit_forms,
     "form_id" => $form_id,
@@ -28,6 +38,9 @@ $page_vars = array(
     "form_fields" => $form_fields,
     "js_messages" => array(
         "phrase_please_select", "phrase_please_select_form", "word_delete"
+    ),
+    "js_files" => array(
+        "{$root_url}/modules/submission_accounts/scripts/manage_submission_account.js"
     )
 );
 

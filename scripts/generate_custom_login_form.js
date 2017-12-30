@@ -34,6 +34,6 @@ lf_ns.generate = function() {
 
   html += "</form>";
 
-  html_editor.setCode(html);
-}
+  html_editor.setValue(html);
+};
 

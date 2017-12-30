@@ -20,14 +20,19 @@ if ($request["action"] == "get_form_fields") {
 
     $js_info = array();
     foreach ($form_fields as $field_info) {
-        $js_info[] = "[{$field_info["field_id"]}, \"" . htmlspecialchars($field_info["field_title"],
-            ENT_QUOTES) . "\"]";
+        $js_info[] = array($field_info["field_id"], htmlspecialchars($field_info["field_title"], ENT_QUOTES));
     }
 
-    echo json_encode(array(
+    echo returnJSON(array(
         "success" => true,
         "form_id" => $form_id,
         "fields" => $js_info
     ));
 }
 
+
+function returnJSON($php)
+{
+    header("Content-Type: application/json");
+    return json_encode($php);
+}

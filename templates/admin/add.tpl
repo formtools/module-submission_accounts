@@ -1,6 +1,6 @@
 {ft_include file='modules_header.tpl'}
 
-  <span id="loading_icon" style="display:none"><img src="{$g_root_url}/global/images/loading.gif" /></span>
+  <span id="loading_icon" class="sa-loading" style="display:none"><img src="{$g_root_url}/global/images/loading.gif" /></span>
 
   <table cellpadding="0" cellspacing="0">
   <tr>

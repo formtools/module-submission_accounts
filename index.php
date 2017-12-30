@@ -13,7 +13,7 @@ $L = $module->getLangStrings();
 $success = true;
 $message = "";
 if (isset($request["add_form"])) {
-    list($success, $message) = sa_add_submission_account($request);
+    list($success, $message) = Admin::addSubmissionAccount($request, $L);
 } else {
     if (isset($request["delete"])) {
         list($success, $message) = sa_delete_submission_account($request["delete"]);

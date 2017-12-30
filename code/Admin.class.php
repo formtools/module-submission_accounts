@@ -73,16 +73,16 @@ class Admin
 
             // finally, add a couple of default menu items
             $db->query("
-            INSERT INTO {PREFIX}module_submission_accounts_menus (form_id, display_text, url, page_identifier, is_submenu, list_order)
-            VALUES (:form_id, 'Edit Submission', '/modules/submission_accounts/users/index.php', 'edit_submission', 'no', 1)
-        ");
+                INSERT INTO {PREFIX}module_submission_accounts_menus (form_id, display_text, url, page_identifier, is_submenu, list_order)
+                VALUES (:form_id, 'Edit Submission', '/modules/submission_accounts/users/index.php', 'edit_submission', 'no', 1)
+            ");
             $db->bind("form_id", $form_id);
             $db->execute();
 
             $db->query("
-            INSERT INTO {PREFIX}module_submission_accounts_menus (form_id, display_text, url, page_identifier, is_submenu, list_order)
-            VALUES (:form_id, 'Logout', '/modules/submission_accounts/logout.php', 'logout', 'no', 2)
-        ");
+                INSERT INTO {PREFIX}module_submission_accounts_menus (form_id, display_text, url, page_identifier, is_submenu, list_order)
+                VALUES (:form_id, 'Logout', '/modules/submission_accounts/logout.php', 'logout', 'no', 2)
+            ");
             $db->bind("form_id", $form_id);
             $db->execute();
 

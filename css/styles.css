@@ -28,3 +28,6 @@
 .edit_sa_menu li.col6 {
   width: 70px;
 }
+.sa-loading {
+    float: right;
+}

@@ -19,7 +19,6 @@ class Module extends FormToolsModule
     protected $version = "2.0.0";
     protected $date = "2017-12-26";
     protected $originLanguage = "en_us";
-    protected $jsFiles = array("{MODULEROOT}/scripts/manage_submission_account.js");
     protected $cssFiles = array("{MODULEROOT}/css/styles.css");
 
     protected $nav = array(
@@ -81,7 +80,7 @@ class Module extends FormToolsModule
                 "logout_url" => "",
                 "num_logged_in_users_per_page" => 10
             );
-            Settings::set($settings, "submission_history");
+            Settings::set($settings, "submission_accounts");
 
             $db->query("
                 CREATE TABLE IF NOT EXISTS {PREFIX}module_submission_accounts_view_override (
@@ -131,7 +130,7 @@ class Module extends FormToolsModule
         $db->query("DROP TABLE IF EXISTS {PREFIX}module_submission_accounts_view_override");
         $db->execute();
 
-        $db->query("DELETE FROM IF EXISTS {PREFIX}settings WHERE module = 'submission_accounts'");
+        $db->query("DELETE FROM {PREFIX}settings WHERE module = 'submission_accounts'");
         $db->execute();
     }
 

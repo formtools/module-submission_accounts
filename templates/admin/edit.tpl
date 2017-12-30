@@ -1,6 +1,6 @@
 {ft_include file='modules_header.tpl'}
 
-  <span id="loading_icon" style="display:none"><img src="{$images_url}/ajax_loading.gif" /></span>
+  <span id="loading_icon" class="sa-loading" style="display:none"><img src="{$g_root_url}/global/images/loading.gif" /></span>
 
   <table cellpadding="0" cellspacing="0" class="margin_bottom_large">
   <tr>
@@ -18,15 +18,15 @@
   {ft_include file='tabset_open.tpl'}
 
     {if $page == "main"}
-      {include file='../../modules/submission_accounts/templates/admin/tab_main.tpl'}
+      {include file='./tab_main.tpl'}
     {elseif $page == "menu"}
-      {include file='../../modules/submission_accounts/templates/admin/tab_menu.tpl'}
+      {include file='./tab_menu.tpl'}
     {elseif $page == "users"}
-      {include file='../../modules/submission_accounts/templates/admin/tab_users.tpl'}
+      {include file='./tab_users.tpl'}
     {elseif $page == "html"}
-      {include file='../../modules/submission_accounts/templates/admin/tab_html.tpl'}
+      {include file='./tab_html.tpl'}
     {else}
-      {include file='../../modules/submission_accounts/templates/admin/tab_main.tpl'}
+      {include file='./tab_main.tpl'}
     {/if}
 
   {ft_include file='tabset_close.tpl'}
