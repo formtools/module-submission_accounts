@@ -3,6 +3,7 @@
 require_once("../../global/library.php");
 
 use FormTools\Administrator;
+use FormTools\Core;
 use FormTools\General;
 use FormTools\Modules;
 use FormTools\Settings;
@@ -74,5 +75,9 @@ $page_vars["head_js"] = <<< END
 var rules = [];
 rules.push("required,email,{$L["validation_no_email"]}");
 END;
+
+// Urgh. Should be refactored along with User Roles
+Core::$user->setTheme($g_theme);
+Core::$user->setSwatch($g_swatch);
 
 $module->displayPage("templates/forget_password.tpl", $page_vars, $g_theme, $g_swatch);

@@ -41,7 +41,7 @@
     <tr>
       <td class="medium_grey" align="center">{$info.form_id}</td>
       <td class="pad_left_small"><a href="../../admin/forms/submissions.php?form_id={$info.form_id}">{$info.form_name}</a></td>
-      <td class="pad_left_small"><a href="../../admin/forms/edit.php?form_id={$info.form_id}&view_id={$info.view_id}&page=edit_view">{display_view_name view_id=$info.view_id}</a></td>
+      <td class="pad_left_small"><a href="../../admin/forms/edit/?form_id={$info.form_id}&view_id={$info.view_id}&page=edit_view">{display_view_name view_id=$info.view_id}</a></td>
       <td align="center">
         {if $info.view_overrides|@count == 0}
           {$LANG.word_no}

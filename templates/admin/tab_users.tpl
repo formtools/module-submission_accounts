@@ -28,7 +28,7 @@
       <td align="center" class="medium_grey">{$submission.submission_id}</td>
       <td>{$submission.$username_col}</td>
       <td>
-        {$submission.last_logged_in|custom_format_date:$SESSION.account.timezone_offset:$SESSION.account.date_format}
+        {$submission.last_logged_in|custom_format_date:$account.timezone_offset:$account.date_format}
       </td>
       <td align="center"><a href="../../../admin/forms/edit_submission.php?submission_id={$submission.submission_id}&form_id={$form_id}&view_id={$submission_account.view_id}">{$LANG.word_view|upper}</a></td>
     </tr>
