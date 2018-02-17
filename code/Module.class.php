@@ -16,8 +16,8 @@ class Module extends FormToolsModule
     protected $author = "Ben Keen";
     protected $authorEmail = "ben.keen@gmail.com";
     protected $authorLink = "https://formtools.org";
-    protected $version = "2.0.0";
-    protected $date = "2017-12-26";
+    protected $version = "2.0.1";
+    protected $date = "2018-02-17";
     protected $originLanguage = "en_us";
     protected $cssFiles = array("{MODULEROOT}/css/styles.css");
 
@@ -156,14 +156,27 @@ class Module extends FormToolsModule
             $db->execute();
         }
 
-        if ($old_version_date < 20110930) {
+        if (!self::checkColumnExists("module_submission_accounts", "swatch")) {
             $db->query("ALTER TABLE {PREFIX}module_submission_accounts ADD swatch VARCHAR(255) NULL AFTER theme");
             $db->execute();
+        }
 
+        if ($old_version_date < 20110930) {
             $db->query("UPDATE {PREFIX}module_submission_accounts SET swatch = 'green' WHERE theme = 'default'");
             $db->execute();
         }
 
         return array(true, "");
+    }
+
+    // move to core
+    private static function checkColumnExists($table_name, $column_name)
+    {
+        $db = Core::$db;
+
+        $db->query("SHOW COLUMNS FROM {PREFIX}$table_name LIKE '$column_name'");
+        $db->execute();
+
+        return !empty($db->fetch());
     }
 }
