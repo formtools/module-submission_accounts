@@ -16,8 +16,8 @@ class Module extends FormToolsModule
     protected $author = "Ben Keen";
     protected $authorEmail = "ben.keen@gmail.com";
     protected $authorLink = "https://formtools.org";
-    protected $version = "2.0.1";
-    protected $date = "2018-02-17";
+    protected $version = "2.0.2";
+    protected $date = "2018-02-24";
     protected $originLanguage = "en_us";
     protected $cssFiles = array("{MODULEROOT}/css/styles.css");
 
@@ -135,33 +135,29 @@ class Module extends FormToolsModule
     }
 
 
-    public function upgrade($old_version_info, $new_version_info)
+    public function upgrade($module_id, $old_module_version)
     {
         $db = Core::$db;
 
-        $old_version_date = date("Ymd", General::convertDatetimeToTimestamp($old_version_info["module_date"]));
-
-        if ($old_version_date < 20091121) {
-            $db->query("
-                CREATE TABLE IF NOT EXISTS {PREFIX}module_submission_accounts_view_override (
-                    override_id mediumint(8) unsigned NOT NULL auto_increment,
-                    form_id mediumint(8) unsigned NOT NULL,
-                    field_id mediumint(9) NOT NULL,
-                    match_values varchar(255) NOT NULL,
-                    view_id mediumint(8) unsigned NOT NULL,
-                    process_order smallint(5) unsigned NOT NULL,
-                    PRIMARY KEY (override_id)
-                ) DEFAULT CHARSET=utf8
-            ");
-            $db->execute();
-        }
+        $db->query("
+            CREATE TABLE IF NOT EXISTS {PREFIX}module_submission_accounts_view_override (
+                override_id mediumint(8) unsigned NOT NULL auto_increment,
+                form_id mediumint(8) unsigned NOT NULL,
+                field_id mediumint(9) NOT NULL,
+                match_values varchar(255) NOT NULL,
+                view_id mediumint(8) unsigned NOT NULL,
+                process_order smallint(5) unsigned NOT NULL,
+                PRIMARY KEY (override_id)
+            ) DEFAULT CHARSET=utf8
+        ");
+        $db->execute();
 
         if (!self::checkColumnExists("module_submission_accounts", "swatch")) {
             $db->query("ALTER TABLE {PREFIX}module_submission_accounts ADD swatch VARCHAR(255) NULL AFTER theme");
             $db->execute();
         }
 
-        if ($old_version_date < 20110930) {
+        if (General::isVersionEarlierThan($old_module_version, "1.1.4")) {
             $db->query("UPDATE {PREFIX}module_submission_accounts SET swatch = 'green' WHERE theme = 'default'");
             $db->execute();
         }
