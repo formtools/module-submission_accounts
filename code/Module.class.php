@@ -16,8 +16,8 @@ class Module extends FormToolsModule
     protected $author = "Ben Keen";
     protected $authorEmail = "ben.keen@gmail.com";
     protected $authorLink = "https://formtools.org";
-    protected $version = "2.0.2";
-    protected $date = "2018-02-24";
+    protected $version = "2.0.3";
+    protected $date = "2018-11-24";
     protected $originLanguage = "en_us";
     protected $cssFiles = array("{MODULEROOT}/css/styles.css");
 
@@ -173,6 +173,7 @@ class Module extends FormToolsModule
         $db->query("SHOW COLUMNS FROM {PREFIX}$table_name LIKE '$column_name'");
         $db->execute();
 
-        return !empty($db->fetch());
+        $result = $db->fetch();
+        return !empty($result);
     }
 }

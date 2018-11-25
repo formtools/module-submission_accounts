@@ -8,7 +8,6 @@ use FormTools\General;
 use FormTools\Sessions;
 use FormTools\Settings;
 use FormTools\Submissions;
-use PDO, Exception;
 
 
 class Users
