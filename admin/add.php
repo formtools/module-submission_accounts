@@ -16,19 +16,19 @@ $root_url = Core::getRootUrl();
 $submission_accounts = Admin::getSubmissionAccounts();
 $omit_forms = array();
 foreach ($submission_accounts as $configured_form) {
-    $omit_forms[] = $configured_form["form_id"];
+	$omit_forms[] = $configured_form["form_id"];
 }
 
 $js = Admin::getFormViewMappingJs();
 
 $page_vars = array(
-    "omit_forms" => $omit_forms,
-    "js_messages" => array(
-        "phrase_please_select", "phrase_please_select_form", "word_delete"
-    ),
-    "js_files" => array(
-        "$root_url/modules/submission_accounts/scripts/manage_submission_account.js"
-    )
+	"omit_forms" => $omit_forms,
+	"js_messages" => array(
+		"phrase_please_select", "phrase_please_select_form", "word_delete"
+	),
+	"js_files" => array(
+		"$root_url/modules/submission_accounts/scripts/manage_submission_account.js"
+	)
 );
 
 $page_vars["head_js"] = <<< END
