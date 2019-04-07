@@ -26,7 +26,7 @@ $submission_id = Sessions::get("account.submission_id");
 
 // store the form ID as the current form ID. This is used in a few places, including the delete file Ajax function
 Sessions::set("curr_form_id", $form_id);
-
+Sessions::set("form_{$form_id}_view_id", $view_id);
 $tab_number = Modules::loadModuleField("submission_accounts", "tab", "view_{$view_id}_current_tab", 1);
 
 // store this submission ID
