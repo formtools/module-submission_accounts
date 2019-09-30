@@ -122,7 +122,7 @@ class Users
         $account_found = false;
         $submission_info = array();
         foreach ($submissions as $submission) {
-            if ($submission[$password_col] == $info["password"]) {
+            if ($submission[$password_col] == General::encode($info["password"])) {
                 $account_found = true;
                 $submission_info = $submission;
                 break;
