@@ -131,7 +131,8 @@ $page_vars = array(
         "word_yes",
         "phrase_validation_error",
         "word_close"
-    )
+    ),
+    "password_type_id" => FieldTypes::getFieldTypeIdByIdentifier("password")
 );
 $page_vars["head_string"] = <<< END
   <script type="text/javascript" src="$root_url/global/scripts/manage_submissions.js"></script>

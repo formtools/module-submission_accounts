@@ -122,7 +122,7 @@ class Users
         $account_found = false;
         $submission_info = array();
         foreach ($submissions as $submission) {
-            if ($submission[$password_col] == $info["password"]) {
+            if ($submission[$password_col] == General::encode($info["password"])) {
                 $account_found = true;
                 $submission_info = $submission;
                 break;
@@ -310,9 +310,19 @@ class Users
         $username = $submission_info[$username_col];
 
         $field_info = Fields::getFormField($submission_account["password_field_id"]);
+        $password = General::generatePassword();
         $password_col = $field_info["col_name"];
-        $password = $submission_info[$password_col];
+        $encrypted_password = General::encode($password);
 
+        // update the database with encrypted password
+        $db->query("
+            UPDATE {PREFIX}form_{$form_id}
+            SET  $password_col = :encrypted_password
+            WHERE submission_id = :submission_id
+        ");
+        $db->bind("encrypted_password", $encrypted_password);
+        $db->bind("submission_id", $submission_info["submission_id"]);
+        $db->execute();
 
         // 1. build the email content
         $placeholders = array(
